@@ -22,7 +22,7 @@
 
 #### パッケージ
 
-- `lecture_nav2_bringup`:navigation2を学ぶためのlaunchファイル群
+TBA
 
 
 ---
