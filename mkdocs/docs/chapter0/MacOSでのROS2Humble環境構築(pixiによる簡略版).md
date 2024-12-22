@@ -66,6 +66,7 @@ ros-humble-turtlebot3-gazebo = ">=2.2.5,<3"
 ros-humble-nav2-bringup = ">=1.1.13,<2"
 protobuf = "4.25.1.*"
 glog = "==0.6.0"
+graphviz = ">=9.0.0,<10"
 
 [activation.env]
 ROS_DOMAIN_ID = "2"
@@ -76,7 +77,7 @@ GAZEBO_MODEL_PATH = "$GAZEBO_MODEL_PATH:$PIXI_PROJECT_ROOT/.pixi/envs/default/sh
 上記の`[dependencies]`は以下のコマンドと同義でも追加できる。
 ```sh
 cd ~/pixi_ros2
-pixi add ros-humble-desktop ros-humble-turtlesim colcon-common-extensions setuptools ros-humble-ament-cmake-auto compilers pkg-config cmake ninja ros-humble-turtlebot3-gazebo ros-humble-nav2-bringup "protobuf=4.25.1" glog==0.6.0
+pixi add ros-humble-desktop ros-humble-turtlesim colcon-common-extensions setuptools ros-humble-ament-cmake-auto compilers pkg-config cmake ninja ros-humble-turtlebot3-gazebo ros-humble-nav2-bringup "protobuf=4.25.1" glog==0.6.0 graphviz
 ```
 `[activation.env]`は手動で追加しておく
 
