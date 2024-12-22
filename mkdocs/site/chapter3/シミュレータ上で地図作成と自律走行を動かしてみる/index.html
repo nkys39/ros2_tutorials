@@ -1104,8 +1104,7 @@
 <li>nav2_bringup</li>
 <li>slam_toolbox  </li>
 </ul>
-<p>インストールした時点で地図作成と自律走行を動かすためのlaunchファイルは<code>/opt/ros/humble/share/[パッケージ名]/launch/ディレクトリ</code>にあります。<br />
-動かすことはできますが、このままでは編集ができないので、動かすためのlaunchファイルを<code>lecture_nav2_bringupパッケージ</code>にコピーしてまとめてあります。  </p>
+<p>インストールした時点で地図作成と自律走行を動かすためのlaunchファイルは<code>/opt/ros/humble/share/[パッケージ名]/launch/ディレクトリ</code>にあります。(pixi環境の場合は<code>$PIXI_PROJECT_ROOT/.pixi/envs/default/share/[パッケージ名]/launch/ディレクトリ</code>)  </p>
 <hr />
 <h2 id="slam">シミュレータ上で地図作成(SLAM)を動かしてみる</h2>
 <p>turtlebot3シミュレーションとrivzを起動します。<br />
@@ -1122,10 +1121,8 @@ launchファイルの引数に何が指定できるかは、<code>ros2 launch [�
 起動に成功するとrvizは下記のようになります。</p>
 <p><img alt="" src="../img/slam.png" /></p>
 <p>速度指令をパブリッシュして地図を作成しましょう。</p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># ジョイスティックがある場合</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>lecture_nav2_bringup<span class="w"> </span>joy_teleop_launch.py
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># キーボードで操作する場合</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>teleop_twist_keyboard
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># キーボードで操作</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>teleop_twist_keyboard
 </code></pre></div>
 ジョイスティックで操作の場合、1番ボタン(低速)または,2番ボタン(高速)を押しながら左スティックを倒した方向に移動します。  <br />
 キーコンフィグはteleop_twist_joyノードのパラメータで変更可能です</p>
@@ -1137,7 +1134,7 @@ launchファイルの引数に何が指定できるかは、<code>ros2 launch [�
 <li>map_serverパッケージには地図保存の方法が2種類提供されています<ul>
 <li>map_saver_cliノード<br />
 <code>-f [保存先パス]</code>オプションで任意名で保存ができます。
-  <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ros2 run nav2_map_server map_saver_cli -f ~/map
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>nav2_map_server<span class="w"> </span>map_saver_cli<span class="w"> </span>-f<span class="w"> </span>map
 </code></pre></div></li>
 <li>map_saver_serverノード
   <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># 今回はslam_launch.py内で立ち上げているので下記は不要</span>
@@ -1145,17 +1142,17 @@ launchファイルの引数に何が指定できるかは、<code>ros2 launch [�
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># ros2 lifecycle set /map_saver 1</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># ros2 lifecycle set /map_saver 3</span>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># サービスコマンドで地図保存ができます</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/map_saver/save_map<span class="w"> </span>nav2_msgs/srv/SaveMap<span class="w"> </span><span class="s2">&quot;{map_topic: map, map_url: /home/user/map, image_format: pgm, map_mode: trinary, free_thresh: 0.25, occupied_thresh: 0.65}&quot;</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/map_saver/save_map<span class="w"> </span>nav2_msgs/srv/SaveMap<span class="w"> </span><span class="s2">&quot;{map_topic: map, map_url: map, image_format: pgm, map_mode: trinary, free_thresh: 0.25, occupied_thresh: 0.65}&quot;</span>
 </code></pre></div></li>
 </ul>
 </li>
 </ul>
-<p>上記のどちらかを実行すると、<code>~/map.yaml</code>と<code>~/map.pgm</code>が作成されます。<br />
+<p>上記のどちらかを実行すると、<code>map.yaml</code>と<code>map.pgm</code>が作成されます。<br />
 この<code>pgmファイル</code>と<code>yamlファイル</code>がROS2での自律走行の地図になります。<br />
-詳細については【5章】で説明しますが、<code>pgmファイル</code>が占有格子地図の各グリッドの値を画像ファイルとして持ち、<code>yamlファイル</code>が原点座標などの設定値を持っています。  </p>
+詳細については補足資料で説明しますが、<code>pgmファイル</code>が占有格子地図の各グリッドの値を画像ファイルとして持ち、<code>yamlファイル</code>が原点座標などの設定値を持っています。  </p>
 <p><img alt="" src="../img/map.png" />
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># ~/map.yaml</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/user/map.pgm</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># map.yaml</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">map.pgm</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trinary</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">-2.95</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-2.57</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0</span><span class="p p-Indicator">]</span>
@@ -1174,7 +1171,7 @@ launchファイルの引数に何が指定できるかは、<code>ros2 launch [�
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># Rviz2(navigation2の設定済み)を起動</span>
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nav2_bringup<span class="w"> </span>rviz_launch.py
 <a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># 自己位置推定の起動</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nav2_bringup<span class="w"> </span>localization_launch.py<span class="w"> </span>map:<span class="o">=</span>/home/user/map.yaml<span class="w"> </span>use_sim_time:<span class="o">=</span>True
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nav2_bringup<span class="w"> </span>localization_launch.py<span class="w"> </span>map:<span class="o">=</span>map.yaml<span class="w"> </span>use_sim_time:<span class="o">=</span>True
 </code></pre></div></p>
 <p>起動すると下記のような状態でまだ初期位置が与えられていない状態になっています。</p>
 <p><img alt="" src="../img/localization.png" /></p>
@@ -1187,10 +1184,8 @@ launchファイルの引数に何が指定できるかは、<code>ros2 launch [�
 </code></pre></div></p>
 <p>初期位置が設定されるとTFと赤い点でLaserScan、緑矢印で自己位置推定のパーティクルフィルタ(粒子フィルタ)の値が可視化されます。</p>
 <p>速度指令をパブリッシュして緑矢印の自己位置推定のパーティクルの動きを観察しましょう。</p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># ジョイスティックがある場合</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>lecture_nav2_bringup<span class="w"> </span>joy_teleop_launch.py
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># キーボードで操作する場合</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>teleop_twist_keyboard
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># キーボードで操作</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>teleop_twist_keyboard
 </code></pre></div>
 ロボットの動きに合わせてパーティクルの位置が更新されていきます。</p>
 <p><img alt="" src="../img/localization2.gif" /></p>
