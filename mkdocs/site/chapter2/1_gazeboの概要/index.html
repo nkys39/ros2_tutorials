@@ -1,0 +1,1972 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../2_rqt%E3%81%AE%E6%A6%82%E8%A6%81/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>1.シミュレータGazeboについて - ROS2 Tutorials</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gazebo" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="ROS2 Tutorials" class="md-header__button md-logo" aria-label="ROS2 Tutorials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ROS2 Tutorials
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1.シミュレータGazeboについて
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ROS2 Tutorials" class="md-nav__button md-logo" aria-label="ROS2 Tutorials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ROS2 Tutorials
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【環境構築】
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            【環境構築】
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Ubuntu22.04%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28ROS2%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.Ubuntu22.04でのROS2Humble環境構築(ROS2デフォルト)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Ubuntu22.04%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.Ubuntu22.04でのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Windows11%28WSL2%29%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.Windows11(WSL2)でのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/MacOS%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.MacOSでのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【Navigation2体験】navigation2を用いた地図構築(SLAM)と自律走行の使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            【Navigation2体験】navigation2を用いた地図構築(SLAM)と自律走行の使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E4%B8%8A%E3%81%A7%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%E3%81%A8%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%E3%82%92%E5%8B%95%E3%81%8B%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.シミュレータ上で地図作成と自律走行を動かしてみる
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%28SLAM%29%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.地図作成(SLAM)の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E8%87%AA%E5%B7%B1%E4%BD%8D%E7%BD%AE%E6%8E%A8%E5%AE%9A%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.自己位置推定の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%28navigation2%29%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.自律走行(navigation2)の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_ROS2の基礎】ロボット用ミドルウェアROS2の概要とROS2コマンドの使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_ROS2の基礎】ロボット用ミドルウェアROS2の概要とROS2コマンドの使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/1_ROS2%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.ROS2の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/2_ROS2%E3%81%AE%E5%9F%BA%E7%A4%8E%E3%81%A8ROS2%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.ROS2の基礎とROS2コマンド
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/3_ROS2%E3%81%AElaunch%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.ROS2のlaunchシステム
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_ROS2のツール】シミュレータ(Gazebo)とROS2関連ツールの使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_ROS2のツール】シミュレータ(Gazebo)とROS2関連ツールの使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    1.シミュレータGazeboについて
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    1.シミュレータGazeboについて
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1gazebo" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.Gazeboとは
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2gazebo" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.Gazeboを動かしてみる
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.Gazeboを動かしてみる">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      サンプルオブジェクト(立方体/球/円柱)の配置
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      物体の選択
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      物体の移動
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      物体の回転
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      物体の伸縮
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      選択の解除
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      光のライティング
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      時刻の再生/停止
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-editor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building Editor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-editor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Editor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Insertタブ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      ワールドを保存する
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      保存したワールドを呼び出す
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3gazebolaunch" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.Gazeboをlaunchで起動する
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.Gazeboをlaunchで起動する">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gazebo_launchpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      gazebo_launch.py
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-turtlebot3" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. ロボットをシミュレーションする(turtlebot3)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. ロボットをシミュレーションする(turtlebot3)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#turtlebot3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Turtlebot3の関連サイト
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turtlebot3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      turtlebot3のシミュレーション環境のインストール
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turtlebot3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      turtlebot3のシミュレーションの起動
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turtlebot3_gazeboempty_worldlaunchpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      turtlebot3_gazeboのempty_world.launch.pyの詳細
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turtlebot3_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      turtlebot3のシミュレーションのノード構成
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gazebo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gazeboの概要まとめ
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      ロボットモデルを自作するための参考サイト
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_rqt%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.ROS2のGUIツールrqtについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_rviz%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3D可視化ツールRvizについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_tf%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.座標管理ライブラリTFについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_ros2bag%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.データ保存/再生ツールros2bagについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_Navigation2】自律走行の概要とnavigation2の構成
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_Navigation2】自律走行の概要とnavigation2の構成
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. 自律走行の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%28SLAM%29%E3%81%AE%E8%AA%AC%E6%98%8E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. 地図作成(SLAM)の説明
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/Navigation2%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Navigation2の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1gazebo" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.Gazeboとは
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2gazebo" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.Gazeboを動かしてみる
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.Gazeboを動かしてみる">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      サンプルオブジェクト(立方体/球/円柱)の配置
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      物体の選択
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      物体の移動
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      物体の回転
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      物体の伸縮
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      選択の解除
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      光のライティング
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      時刻の再生/停止
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-editor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building Editor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-editor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Editor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Insertタブ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      ワールドを保存する
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      保存したワールドを呼び出す
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3gazebolaunch" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.Gazeboをlaunchで起動する
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.Gazeboをlaunchで起動する">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gazebo_launchpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      gazebo_launch.py
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-turtlebot3" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. ロボットをシミュレーションする(turtlebot3)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. ロボットをシミュレーションする(turtlebot3)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#turtlebot3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Turtlebot3の関連サイト
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turtlebot3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      turtlebot3のシミュレーション環境のインストール
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turtlebot3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      turtlebot3のシミュレーションの起動
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turtlebot3_gazeboempty_worldlaunchpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      turtlebot3_gazeboのempty_world.launch.pyの詳細
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turtlebot3_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      turtlebot3のシミュレーションのノード構成
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gazebo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gazeboの概要まとめ
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      ロボットモデルを自作するための参考サイト
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="gazebo">シミュレータGazeboについて</h1>
+<p><img alt="gazebo_logo.jpg" src="../img/gazebo/gazebo_logo.jpg" /></p>
+<hr />
+<h2 id="1gazebo">1.Gazeboとは</h2>
+<p>オープンソースの3Dロボットシミュレータの一つ</p>
+<p><img alt="gazebo.png" src="../img/gazebo/gazebo.png" /></p>
+<p>特徴   </p>
+<ul>
+<li>ROS/ROS2との連携が充実(Open Roboticsが開発)</li>
+<li>ROS2を用いずに単独でも使用可能</li>
+<li>カメラやLiDARなどのセンサシミュレーションが豊富</li>
+<li>公開されているロボットモデルが豊富</li>
+<li>リアルタイム性を重視</li>
+<li>物理エンジンの切り替えが可能(ODE(デフォルト),Bullet,Simbody,DART)</li>
+<li>Apacheライセンス</li>
+</ul>
+<p><mark>Gazeboを用いることで実機が無くてもロボットのソフトウェアを開発・検証できます</mark></p>
+<p>今回使用しているGazeboのバージョンは<a href="https://classic.gazebosim.org/tutorials">Gazebo11</a>でROS1の時代から存在しGazebo Classicと呼ばれています。<br />
+Gazebo Classicはほぼ開発が終了し、2025年1月にサポート終了予定です。<br />
+現在次期バージョンの<a href="https://gazebosim.org/docs/garden/releases">Ignition Gazebo</a>が開発されています。<br />
+こちらが現在Gazeboという名称を引き継いでおり、今後置き換わって行きます。<br />
+新しいGazeboにもバージョンがあり、ROS2 Humbleと使うにはGazebo Fortressが推奨されています。(推奨以外は余計なエラーが出る可能性が高いです。)</p>
+<p>ROS2と連携したシミュレータには、他にも下記があります。  </p>
+<ul>
+<li>Unity</li>
+<li>Unreal Engine</li>
+<li>Webot</li>
+<li>AutowareのAWSIM</li>
+<li>Nvidia Isaac ROS</li>
+<li>Choreonoid</li>
+</ul>
+<p>などがあり、フォトメトリックでリッチなシミュレータを使うことができます。</p>
+<hr />
+<h2 id="2gazebo">2.Gazeboを動かしてみる</h2>
+<p>端末を開き(Ctrl+Alt+T)、下記コマンドを入力
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>gazebo
+</code></pre></div>
+Gazeboには多くのGUIツールが用意されている。</p>
+<p><img alt="gazebo_exp.png" src="../img/gazebo/gazebo_exp.png" /></p>
+<hr />
+<h3 id="_1">サンプルオブジェクト(立方体/球/円柱)の配置</h3>
+<p>サンプルオブジェクトのGUIを選択し、ワールド上の任意の位置でクリックすることでサンプルオブジェクトを配置できます。</p>
+<p><img alt="gazebo_create.gif" src="../img/gazebo/gazebo_create.gif" /></p>
+<hr />
+<h3 id="_2">物体の選択</h3>
+<p>物体の選択(矢印アイコン)が選択されている状態で、ワールド上の物体をクリックすることで、プロパティなどをの値を確認することができます。</p>
+<hr />
+<h3 id="_3">物体の移動</h3>
+<p>物体の移動(十字矢印アイコン)が選択された状態で、物体を選択するとx/y/z方向の矢印が出現し、各軸を選択しドラッグすることで特定の軸方向に移動させることができます。上方向に移動させ離すと、物理シミュレータの重力の影響で自由落下をします。
+また、地面や他の物体と干渉した場合は反発します。</p>
+<p><img alt="gazebo_translation.gif" src="../img/gazebo/gazebo_translation.gif" /></p>
+<hr />
+<h3 id="_4">物体の回転</h3>
+<p>物体の回転が選択された状態で、物体を選択するとroll/pitch/yaw方向の回転軸が出現し、各軸を選択しドラッグすることで回転できます。</p>
+<p><img alt="gazebo_rotation.gif" src="../img/gazebo/gazebo_rotation.gif" /></p>
+<hr />
+<h3 id="_5">物体の伸縮</h3>
+<p>物体の伸縮が選択された状態で、物体を選択するとx/y/z方向の矢印が出現し、各軸を選択しドラッグすることで大きさを変更することができます。</p>
+<p><img alt="gazebo_scale.gif" src="../img/gazebo/gazebo_scale.gif" /></p>
+<hr />
+<h3 id="_6">選択の解除</h3>
+<p>物体の選択(矢印アイコン)が選択することで、各操作を解除できます。(Escキーでも可能)</p>
+<hr />
+<h3 id="_7">光のライティング</h3>
+<p>光のライティングは3種類あります。</p>
+<ul>
+<li>少し広い範囲を照らす弱い光</li>
+<li>狭い範囲を照らす強い光</li>
+<li>全体を照らす強い光</li>
+</ul>
+<p><img alt="gazebo_lighting.gif" src="../img/gazebo/gazebo_lighting.gif" /></p>
+<hr />
+<h3 id="_8">時刻の再生/停止</h3>
+<p>下部にある再生/停止アイコンでgazeboの時間を再開・停止することができます。シミュレーション中に複数の障害物を配置したい場合や微調整したい場合などに便利です。</p>
+<p><img alt="gazebo_time_stop.gif" src="../img/gazebo/gazebo_time_stop.gif" /></p>
+<hr />
+<h3 id="building-editor">Building Editor</h3>
+<p>上タブの<code>Edit</code>⇒<code>Building Editor</code>を選択することで起動できる。オブジェクト作成用のエディタです。部屋の間取りなどを作成する際に簡易に作成が可能です。</p>
+<p>基本操作は、<code>Wall</code>を選択し、壁の角をクリックすることで作成できます。壁作成を中断する場合はEscキーで中断できます。作成したモデルは<code>File</code>⇒<code>Save</code>(Ctrl+s)でモデル名を付けて保存ができます。保存場所は~/building_editor_models/以下に保存され、次回起動以降も<code>Insertタブ</code>から呼び出し複製することができます。<code>Building Editor</code>を終了する場合は<code>File</code>⇒<code>Exit Building Editor</code>(Ctrl+x)で終了できます。</p>
+<p><img alt="gazebo_building_edit.gif" src="../img/gazebo/gazebo_building_edit.gif" /></p>
+<hr />
+<h3 id="model-editor">Model Editor</h3>
+<p>上タブの<code>Edit</code>⇒<code>Model Editor</code>を選択することで起動できる。オブジェクト作成用のエディタです。数値を入力して細かい調整が可能です。</p>
+<p>基本操作は、サンプルオブジェクトを選択し、右クリックすることで<code>Inspectorウインドウ</code>を開き、値を調整できます。<code>Inspectorウインドウ</code>には<code>Link/Visual/Collisionタブ</code>があります。<br />
+<code>Linkタブ</code>では位置などを調整できます。<br />
+<code>Visualタブ</code>では見かけ上の大きさや色などを調整できます。<br />
+<code>Collisionタブ</code>では当たり判定の大きさなどが調整できます。<br />
+作成したモデルは<code>File</code>⇒<code>Save</code>(Ctrl+s)でモデル名を付けて保存ができます。
+保存場所は<code>~/model_editor_models/以下</code>に保存され、次回起動以降も<code>Insertタブ</code>から呼び出し複製することができます。<code>Model Editor</code>を終了する場合は<code>File</code>⇒<code>Model Editor</code>(Ctrl+x)で終了できます。</p>
+<p><img alt="gazebo_model_edit.gif" src="../img/gazebo/gazebo_model_edit.gif" /></p>
+<hr />
+<h3 id="insert">Insertタブ</h3>
+<p><code>Insertタブ</code>では既存モデルを選択し、ワールド上に配置することができます。インターネット接続があれば、多くのgazeboモデルが用意されているサーバーに接続し、選択できるようになります。(接続には起動後3～5分程度かかります)<br />
+Gazeboモデルを選択するとダウンロードが開始され、少し待つと配置できるようになります。ダウンロードしたモデルは<code>~/.gazebo/models/以下</code>に保存され、次回以降はダウンロード待ち時間なしで配置できます(オフラインでも可能)。</p>
+<ul>
+<li>gazeboモデルの事前ダウロード方法</li>
+<li>Insertタブでダウンロードできるモデルは[osrfのgazebogithub]上にあります。</li>
+</ul>
+<p><img alt="insert_tab.png" src="../img/gazebo/insert_tab.png" /></p>
+<hr />
+<h3 id="_9">ワールドを保存する</h3>
+<p><code>File</code>⇒<code>Save World</code>(Ctrl+s)で現在のワールドの状態をファイルに保存できます。ファイルはSDFフォーマットで記述されます。保存時の注意点として、拡張子を入力しないと拡張子なしで保存されるため、拡張子を.worldで保存するのが一般的になっています。</p>
+<hr />
+<h3 id="_10">保存したワールドを呼び出す</h3>
+<p>起動時のオプションで-O(大文字)を付けることで既存のワールドを呼び出せます。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>gazebo<span class="w"> </span>-O<span class="w"> </span>worldファイル名
+</code></pre></div></p>
+<hr />
+<h2 id="3gazebolaunch">3.Gazeboをlaunchで起動する</h2>
+<p>Gazeboはgzserverとgzclientの2個で構成されています。</p>
+<ul>
+<li>gzserver：Gazeboワールドを立ち上げるプログラム(物理シミュレーションを行う)</li>
+<li>gzclient：Gazeboワールドをレンダリングして表示するプログラム</li>
+</ul>
+<p>上記の通り、gzserverのみでシミュレーションは動くので、レンダリングして表示しなくてもよいなら、gzclientは立ち上げなくてもよいです。計算リソースが厳しい場合は実行しない選択肢もあります。</p>
+<p>サンプルのlaunchファイルは、<code>gazebo_rosパッケージ</code>内に<code>gzserver.launch.py</code>と<code>gzclient.launch.py</code>があります。
+<code>gzserver</code>がワールドを立ち上げるので、worldファイルを読み込ませるのは、<code>gzserver</code>になります。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>gazebo_ros<span class="w"> </span>gzserver.launch.py<span class="w"> </span>world:<span class="o">=</span>worldファイルのパス
+</code></pre></div></p>
+<p>GUIが必要な場合は、<code>gzclient</code>を起動します。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>gazebo_ros<span class="w"> </span>gzclient.launch.py
+</code></pre></div></p>
+<hr />
+<h3 id="gazebo_launchpy">gazebo_launch.py</h3>
+<p>上記のlaunchをまとめたlaunchは下記になります。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># coding:utf-8</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kn">from</span> <span class="nn">ament_index_python.packages</span> <span class="kn">import</span> <span class="n">get_package_share_directory</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="kn">from</span> <span class="nn">launch</span> <span class="kn">import</span> <span class="n">LaunchDescription</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="kn">from</span> <span class="nn">launch.actions</span> <span class="kn">import</span> <span class="n">IncludeLaunchDescription</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="kn">from</span> <span class="nn">launch.launch_description_sources</span> <span class="kn">import</span> <span class="n">PythonLaunchDescriptionSource</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="k">def</span> <span class="nf">generate_launch_description</span><span class="p">():</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">pkg_gazebo_ros</span> <span class="o">=</span> <span class="n">get_package_share_directory</span><span class="p">(</span><span class="s1">&#39;gazebo_ros&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="n">world</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        <span class="n">get_package_share_directory</span><span class="p">(</span><span class="s1">&#39;nav2_bringup&#39;</span><span class="p">),</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        <span class="s1">&#39;worlds&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        <span class="s1">&#39;willowgarage.world&#39;</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="p">)</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>    <span class="n">gzserver_cmd</span> <span class="o">=</span> <span class="n">IncludeLaunchDescription</span><span class="p">(</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        <span class="n">PythonLaunchDescriptionSource</span><span class="p">(</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pkg_gazebo_ros</span><span class="p">,</span> <span class="s1">&#39;launch&#39;</span><span class="p">,</span> <span class="s1">&#39;gzserver.launch.py&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>        <span class="p">),</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>        <span class="n">launch_arguments</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;world&#39;</span><span class="p">:</span> <span class="n">world</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="p">)</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>    <span class="n">gzclient_cmd</span> <span class="o">=</span> <span class="n">IncludeLaunchDescription</span><span class="p">(</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>        <span class="n">PythonLaunchDescriptionSource</span><span class="p">(</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pkg_gazebo_ros</span><span class="p">,</span> <span class="s1">&#39;launch&#39;</span><span class="p">,</span> <span class="s1">&#39;gzclient.launch.py&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>        <span class="p">)</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>    <span class="p">)</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">gzserver_cmd</span><span class="p">)</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">gzclient_cmd</span><span class="p">)</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>    <span class="k">return</span> <span class="n">ld</span>
+</code></pre></div></p>
+<hr />
+<h2 id="4-turtlebot3">4. ロボットをシミュレーションする(turtlebot3)</h2>
+<p><img alt="turtlebot3.png" src="../img/gazebo/turtlebot3.png" /></p>
+<p>次にGazeboでロボットをシミュレーションしてみます。</p>
+<ul>
+<li>本講習会で扱うROS2の自律走行メタパッケージ<code>navigation2(nav2)</code>のチュートリアルではROBOTIS社のturtlebot3というロボットが使用されています。</li>
+<li>turtlebot3ではgazeboのモデルが用意されているためこれを使ってロボットをシミュレーションしてみましょう。</li>
+<li>turtlebot3には3種類のモデルがありますが、今回はwaffleを使用します。</li>
+</ul>
+<hr />
+<h3 id="turtlebot3">Turtlebot3の関連サイト</h3>
+<ul>
+<li><a href="https://www.turtlebot.com/">turtlebot</a></li>
+<li><a href="https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/">ROBOTIS e-Manual: turtlebot3/Quick Start Guide</a></li>
+<li><a href="https://emanual.robotis.com/docs/en/platform/turtlebot3/simulation/">ROBOTIS e-Manual: turtlebot3/Simulation</a></li>
+</ul>
+<hr />
+<h3 id="turtlebot3_1">turtlebot3のシミュレーション環境のインストール</h3>
+<p>【0章】の環境構築を行っている場合は不要です。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># aptでturtlebot3のシミュレーションとnav2関連のインストール</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>ros-humble-gazebo-*<span class="w"> </span>ros-humble-cartographer<span class="w"> </span>ros-humble-cartographer-ros<span class="w"> </span>ros-humble-navigation2<span class="w"> </span>ros-humble-nav2-bringup
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>ros-humble-dynamixel-sdk<span class="w"> </span>ros-humble-turtlebot3-msgs<span class="w"> </span>ros-humble-turtlebot3<span class="w"> </span>ros-humble-turtlebot3-simulations
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># ~/.bashrcにTURTLEBOT3の使用するモデルを選択する設定を追加(端末起動に読み込まれる)(burger,waffle,waffle_piから選択可能)</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export TURTLEBOT3_MODEL=waffle&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># ~/.bashrcにTURTLEBOT3のシミュレーションモデルをGazeboに読み込む設定を追加(端末起動に読み込まれる)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;export GAZEBO_MODEL_PATH=</span><span class="nv">$GAZEBO_MODEL_PATH</span><span class="s2">:/opt/ros/humble/share/turtlebot3_gazebo/models&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+</code></pre></div></p>
+<hr />
+<h3 id="turtlebot3_2">turtlebot3のシミュレーションの起動</h3>
+<ul>
+<li>turtlebot3関連のパッケージはたくさんありますが、シミュレーションを行うパッケージは、<code>turtlebot3_gazebo</code>になります。</li>
+<li>
+<p>Gazeboのworld環境は下記が用意されています。</p>
+<ul>
+<li>empty_world.world (何もない)</li>
+<li>turtlebot3_world.world (正六角形の中に1m間隔で9個の円柱)</li>
+<li>turtlebot3_house.world (模擬住宅環境)</li>
+<li>turtlebot3_dqn_stage1.world (5m四方の枠)</li>
+<li>turtlebot3_dqn_stage2.world (5m四方の枠と4個の円柱)</li>
+<li>turtlebot3_dqn_stage3.world (5m四方の枠と4個の円柱)</li>
+<li>turtlebot3_dqn_stage4.world (5m四方の枠内に壁が設置)</li>
+</ul>
+</li>
+<li>
+<p>今回は<code>empty_world.world</code>を使用するため、launchコマンドで<code>empty_world.launch.py</code>を呼び出します。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>empty_world.launch.py
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># teleop_twist_keyboardで速度指令値を送信し動かしてみる</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>teleop_twist_keyboard
+</code></pre></div></p>
+</li>
+<li>Gazeboが起動し、turtlebot3のwaffleモデルが表示されます。</li>
+<li>turtlebot3のwaffleモデルは<code>/cmd_velトピック</code>で動作する差動2輪駆動型のロボットになるため、筐体の横に円柱のタイヤが2個ついています。</li>
+<li>青い円のように見えているものがLaserScanシミュレーション、白い三角柱のように見えているものがカメラシミュレーションになります。</li>
+</ul>
+<p><img alt="turtlebot3_gazebo_empty_world.png" src="../img/gazebo/turtlebot3_gazebo_empty_world.png" />
+<img alt="turtlebot3_gazebo_empty_world2.png" src="../img/gazebo/turtlebot3_gazebo_empty_world2.png" /></p>
+<hr />
+<h3 id="turtlebot3_gazeboempty_worldlaunchpy"><code>turtlebot3_gazebo</code>の<code>empty_world.launch.py</code>の詳細</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">empty_world.launch.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span>
+<span class="normal"><a href="#__codelineno-7-23">23</a></span>
+<span class="normal"><a href="#__codelineno-7-24">24</a></span>
+<span class="normal"><a href="#__codelineno-7-25">25</a></span>
+<span class="normal"><a href="#__codelineno-7-26">26</a></span>
+<span class="normal"><a href="#__codelineno-7-27">27</a></span>
+<span class="normal"><a href="#__codelineno-7-28">28</a></span>
+<span class="normal"><a href="#__codelineno-7-29">29</a></span>
+<span class="normal"><a href="#__codelineno-7-30">30</a></span>
+<span class="normal"><a href="#__codelineno-7-31">31</a></span>
+<span class="normal"><a href="#__codelineno-7-32">32</a></span>
+<span class="normal"><a href="#__codelineno-7-33">33</a></span>
+<span class="normal"><a href="#__codelineno-7-34">34</a></span>
+<span class="normal"><a href="#__codelineno-7-35">35</a></span>
+<span class="normal"><a href="#__codelineno-7-36">36</a></span>
+<span class="normal"><a href="#__codelineno-7-37">37</a></span>
+<span class="normal"><a href="#__codelineno-7-38">38</a></span>
+<span class="normal"><a href="#__codelineno-7-39">39</a></span>
+<span class="normal"><a href="#__codelineno-7-40">40</a></span>
+<span class="normal"><a href="#__codelineno-7-41">41</a></span>
+<span class="normal"><a href="#__codelineno-7-42">42</a></span>
+<span class="normal"><a href="#__codelineno-7-43">43</a></span>
+<span class="normal"><a href="#__codelineno-7-44">44</a></span>
+<span class="normal"><a href="#__codelineno-7-45">45</a></span>
+<span class="normal"><a href="#__codelineno-7-46">46</a></span>
+<span class="normal"><a href="#__codelineno-7-47">47</a></span>
+<span class="normal"><a href="#__codelineno-7-48">48</a></span>
+<span class="normal"><a href="#__codelineno-7-49">49</a></span>
+<span class="normal"><a href="#__codelineno-7-50">50</a></span>
+<span class="normal"><a href="#__codelineno-7-51">51</a></span>
+<span class="normal"><a href="#__codelineno-7-52">52</a></span>
+<span class="normal"><a href="#__codelineno-7-53">53</a></span>
+<span class="normal"><a href="#__codelineno-7-54">54</a></span>
+<span class="normal"><a href="#__codelineno-7-55">55</a></span>
+<span class="normal"><a href="#__codelineno-7-56">56</a></span>
+<span class="normal"><a href="#__codelineno-7-57">57</a></span>
+<span class="normal"><a href="#__codelineno-7-58">58</a></span>
+<span class="normal"><a href="#__codelineno-7-59">59</a></span>
+<span class="normal"><a href="#__codelineno-7-60">60</a></span>
+<span class="normal"><a href="#__codelineno-7-61">61</a></span>
+<span class="normal"><a href="#__codelineno-7-62">62</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="kn">import</span> <span class="nn">os</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="kn">from</span> <span class="nn">ament_index_python.packages</span> <span class="kn">import</span> <span class="n">get_package_share_directory</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="kn">from</span> <span class="nn">launch</span> <span class="kn">import</span> <span class="n">LaunchDescription</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="kn">from</span> <span class="nn">launch.actions</span> <span class="kn">import</span> <span class="n">IncludeLaunchDescription</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="kn">from</span> <span class="nn">launch.launch_description_sources</span> <span class="kn">import</span> <span class="n">PythonLaunchDescriptionSource</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="kn">from</span> <span class="nn">launch.substitutions</span> <span class="kn">import</span> <span class="n">LaunchConfiguration</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="k">def</span> <span class="nf">generate_launch_description</span><span class="p">():</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a>    <span class="n">launch_file_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_package_share_directory</span><span class="p">(</span><span class="s1">&#39;turtlebot3_gazebo&#39;</span><span class="p">),</span> <span class="s1">&#39;launch&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>    <span class="n">pkg_gazebo_ros</span> <span class="o">=</span> <span class="n">get_package_share_directory</span><span class="p">(</span><span class="s1">&#39;gazebo_ros&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a>    <span class="n">use_sim_time</span> <span class="o">=</span> <span class="n">LaunchConfiguration</span><span class="p">(</span><span class="s1">&#39;use_sim_time&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>    <span class="n">x_pose</span> <span class="o">=</span> <span class="n">LaunchConfiguration</span><span class="p">(</span><span class="s1">&#39;x_pose&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;0.0&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a>    <span class="n">y_pose</span> <span class="o">=</span> <span class="n">LaunchConfiguration</span><span class="p">(</span><span class="s1">&#39;y_pose&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;0.0&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a>    <span class="n">world</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a>        <span class="n">get_package_share_directory</span><span class="p">(</span><span class="s1">&#39;turtlebot3_gazebo&#39;</span><span class="p">),</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a>        <span class="s1">&#39;worlds&#39;</span><span class="p">,</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a>        <span class="s1">&#39;empty_world.world&#39;</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a>    <span class="p">)</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a>    <span class="n">gzserver_cmd</span> <span class="o">=</span> <span class="n">IncludeLaunchDescription</span><span class="p">(</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a>        <span class="n">PythonLaunchDescriptionSource</span><span class="p">(</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a>            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pkg_gazebo_ros</span><span class="p">,</span> <span class="s1">&#39;launch&#39;</span><span class="p">,</span> <span class="s1">&#39;gzserver.launch.py&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a>        <span class="p">),</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a>        <span class="n">launch_arguments</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;world&#39;</span><span class="p">:</span> <span class="n">world</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29"></a>    <span class="p">)</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30"></a>
+<a id="__codelineno-7-31" name="__codelineno-7-31"></a>    <span class="n">gzclient_cmd</span> <span class="o">=</span> <span class="n">IncludeLaunchDescription</span><span class="p">(</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32"></a>        <span class="n">PythonLaunchDescriptionSource</span><span class="p">(</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33"></a>            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pkg_gazebo_ros</span><span class="p">,</span> <span class="s1">&#39;launch&#39;</span><span class="p">,</span> <span class="s1">&#39;gzclient.launch.py&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34"></a>        <span class="p">)</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35"></a>    <span class="p">)</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36"></a>
+<a id="__codelineno-7-37" name="__codelineno-7-37"></a>    <span class="n">robot_state_publisher_cmd</span> <span class="o">=</span> <span class="n">IncludeLaunchDescription</span><span class="p">(</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38"></a>        <span class="n">PythonLaunchDescriptionSource</span><span class="p">(</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39"></a>            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">launch_file_dir</span><span class="p">,</span> <span class="s1">&#39;robot_state_publisher.launch.py&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-40" name="__codelineno-7-40"></a>        <span class="p">),</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41"></a>        <span class="n">launch_arguments</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;use_sim_time&#39;</span><span class="p">:</span> <span class="n">use_sim_time</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<a id="__codelineno-7-42" name="__codelineno-7-42"></a>    <span class="p">)</span>
+<a id="__codelineno-7-43" name="__codelineno-7-43"></a>
+<a id="__codelineno-7-44" name="__codelineno-7-44"></a>    <span class="n">spawn_turtlebot_cmd</span> <span class="o">=</span> <span class="n">IncludeLaunchDescription</span><span class="p">(</span>
+<a id="__codelineno-7-45" name="__codelineno-7-45"></a>        <span class="n">PythonLaunchDescriptionSource</span><span class="p">(</span>
+<a id="__codelineno-7-46" name="__codelineno-7-46"></a>            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">launch_file_dir</span><span class="p">,</span> <span class="s1">&#39;spawn_turtlebot3.launch.py&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-47" name="__codelineno-7-47"></a>        <span class="p">),</span>
+<a id="__codelineno-7-48" name="__codelineno-7-48"></a>        <span class="n">launch_arguments</span><span class="o">=</span><span class="p">{</span>
+<a id="__codelineno-7-49" name="__codelineno-7-49"></a>            <span class="s1">&#39;x_pose&#39;</span><span class="p">:</span> <span class="n">x_pose</span><span class="p">,</span>
+<a id="__codelineno-7-50" name="__codelineno-7-50"></a>            <span class="s1">&#39;y_pose&#39;</span><span class="p">:</span> <span class="n">y_pose</span>
+<a id="__codelineno-7-51" name="__codelineno-7-51"></a>        <span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<a id="__codelineno-7-52" name="__codelineno-7-52"></a>    <span class="p">)</span>
+<a id="__codelineno-7-53" name="__codelineno-7-53"></a>
+<a id="__codelineno-7-54" name="__codelineno-7-54"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
+<a id="__codelineno-7-55" name="__codelineno-7-55"></a>
+<a id="__codelineno-7-56" name="__codelineno-7-56"></a>    <span class="c1"># Add the commands to the launch description</span>
+<a id="__codelineno-7-57" name="__codelineno-7-57"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">gzserver_cmd</span><span class="p">)</span>
+<a id="__codelineno-7-58" name="__codelineno-7-58"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">gzclient_cmd</span><span class="p">)</span>
+<a id="__codelineno-7-59" name="__codelineno-7-59"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">robot_state_publisher_cmd</span><span class="p">)</span>
+<a id="__codelineno-7-60" name="__codelineno-7-60"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">spawn_turtlebot_cmd</span><span class="p">)</span>
+<a id="__codelineno-7-61" name="__codelineno-7-61"></a>
+<a id="__codelineno-7-62" name="__codelineno-7-62"></a>    <span class="k">return</span> <span class="n">ld</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><code>empty_world.launch.py</code>では、<code>gzserver</code>,<code>gzclient</code>の他に以下の2個のlaunchファイルを呼び出し、2個のノードを起動しています。</li>
+<li><code>robot_state_publisher.launch.py</code><ul>
+<li>パッケージ名:<code>robot_state_publisher</code></li>
+<li>ノード名:<code>robot_state_publisher</code></li>
+<li>urdfファイル読込、静的位置関係の<code>/tf_staticトピック</code>とrviz上にロボットモデルを表示するための<code>/robot_descriptionトピック</code>を出力</li>
+<li><code>/joint_statesトピック</code>(今回はタイヤの回転状態)をサブスクライブし動的位置関係の<code>/tfトピック</code>を出力</li>
+<li>urdfファイルパス:<code>/opt/ros/humble/share/turtlebot3_gazebo/urdf/turtlebot3_waffle.urdf</code></li>
+</ul>
+</li>
+<li><code>spawn_turtlebot3.launch.py</code><ul>
+<li>パッケージ名:<code>gazebo</code></li>
+<li>ノード名:<code>spawn_entity.py</code></li>
+<li>sdfファイル(urdfファイル)を読込、gazebo上にturtlebot3のwaffleモデルを配置し、ノードを終了</li>
+<li>sdfファイルパス:<code>/opt/ros/humble/share/turtlebot3_gazebo/models/turtlebot3_waffle/model.sdf</code></li>
+</ul>
+</li>
+<li>turtlebot3のwaffleモデルには、筐体モデルの他に差動2輪制御コントローラや複数のセンサシミュレーションのgazebo_pluginsが記述され、ROS2ノードとして動作しています。(<code>ros2 node list</code>で確認できます)</li>
+<li>差動2輪制御コントローラ<ul>
+<li>ノード名:<code>/turtlebot3_diff_drive</code></li>
+<li>gazeboプラグイン名:<code>libgazebo_ros_diff_drive.so</code></li>
+</ul>
+</li>
+<li>車輪の回転状態シミュレーション<ul>
+<li>ノード名:<code>/turtlebot3_joint_state</code></li>
+<li>gazeboプラグイン名:<code>libgazebo_ros_joint_state_publisher.so</code></li>
+</ul>
+</li>
+<li>2DLiDARシミュレーション<ul>
+<li>ノード名:<code>/turtlebot3_laserscan</code></li>
+<li>gazeboプラグイン名:<code>libgazebo_ros_ray_sensor.so</code></li>
+</ul>
+</li>
+<li>カメラシミュレーション<ul>
+<li>ノード名:<code>/camera_driver</code></li>
+<li>gazeboプラグイン名:<code>libgazebo_ros_camera.so</code></li>
+</ul>
+</li>
+<li>IMUシミュレーション<ul>
+<li>ノード名:<code>/turtlebot3_imu</code></li>
+<li>gazeboプラグイン名:<code>libgazebo_ros_imu_sensor.so</code></li>
+</ul>
+</li>
+<li>gazeboプラグインの種類に関してはgazeboのチュートリアルページやgazebo_pluginsのgithubの実装で確認できます。</li>
+<li><a href="https://classic.gazebosim.org/tutorials?cat=connect_ros">gazeboのチュートリアルページ</a></li>
+<li><a href="https://github.com/ros-simulation/gazebo_ros_pkgs/tree/galactic/gazebo_plugins/src">gazebo_ros_pkgsのgazebo_plugins</a></li>
+</ul>
+<hr />
+<h3 id="turtlebot3_3">turtlebot3のシミュレーションのノード構成</h3>
+<p>現在の状態は下記の図のようになります。(講習会ではあまり使用しないためカメラとIMUのシミュレーションは図から省略しています)</p>
+<p><img alt="turtlebot3_gazebo.drawio.png" src="../img/gazebo/turtlebot3_gazebo.drawio.png" /></p>
+<ul>
+<li>図の赤枠部分が自律走行を行っていく上で重要な部分になります。</li>
+<li>入力部分(サブスクライバ)は<code>/cmd_velトピック</code>となっているため、【1章】で行った速度指令値出力で動かすことができます。</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># ros2 topic pubコマンドの場合</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/cmd_vel<span class="w"> </span>geometry_msgs/msg/Twist<span class="w"> </span><span class="s2">&quot;{linear: {x: 0.25, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.5}}&quot;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># teleop_twist_keyboardの場合</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># joy + teleop_twist_joyの場合</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>ros2<span class="w"> </span>run<span class="w"> </span>joy<span class="w"> </span>joy_node
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_joy<span class="w"> </span>teleop_node<span class="w"> </span>
+</code></pre></div>
+<hr />
+<h2 id="gazebo_1">Gazeboの概要まとめ</h2>
+<ul>
+<li>Gazeboはオープンソースの3Dロボットシミュレータで、ROS2から独立したソフトウェアです。</li>
+<li>ROS2との連携や、ロボットモデルやセンサシミュレーションが豊富に揃っています。</li>
+<li>Gazeboを用いることで実機が無くてもロボットのソフトウェアを開発・検証できます。</li>
+<li>Gazeboはシミュレーションを行う<code>gzserver</code>と環境の描画(レンダリング)を行う<code>gzclient</code>の2個から構成されています。</li>
+<li>ロボット(turtlebot3)のシミュレーションを動作させる方法を解説しました。</li>
+<li>このあとからはこれをベースにROS2ツールやnavigation2について解説していきます。</li>
+</ul>
+<hr />
+<h2 id="_11">ロボットモデルを自作するための参考サイト</h2>
+<ul>
+<li><a href="https://navigation.ros.org/setup_guides/urdf/setup_urdf.html">nav2のSetting Up The URDFチュートリアル</a></li>
+<li><a href="https://navigation.ros.org/setup_guides/odom/setup_odom.html#simulating-an-odometry-system-using-gazebo">nav2のSimulating an Odometry System using Gazeboチュートリアル</a></li>
+<li><a href="https://navigation.ros.org/setup_guides/sensors/setup_sensors.html#simulating-sensors-using-gazebo">nav2のSimulating Sensors using Gazeboチュートリアル</a></li>
+</ul>
+<p>差動2輪のロボットモデルであれば、下記のような円柱と球だけで作成することができるため、URDFの記述量も多くはなりません。<br />
+自作のロボットモデルであればセンサ構成等も自由に配置できるため、一度作成してみることをオススメします。</p>
+<p><img alt="" src="../img/gazebo/urdf.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy;2024 Tokyo Metropolitan University
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+    
+  </body>
+</html>

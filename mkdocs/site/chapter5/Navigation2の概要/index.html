@@ -1,0 +1,1476 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%28SLAM%29%E3%81%AE%E8%AA%AC%E6%98%8E/">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>3. Navigation2の概要 - ROS2 Tutorials</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#navigation2" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="ROS2 Tutorials" class="md-header__button md-logo" aria-label="ROS2 Tutorials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ROS2 Tutorials
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3. Navigation2の概要
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ROS2 Tutorials" class="md-nav__button md-logo" aria-label="ROS2 Tutorials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ROS2 Tutorials
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【環境構築】
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            【環境構築】
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Ubuntu22.04%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28ROS2%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.Ubuntu22.04でのROS2Humble環境構築(ROS2デフォルト)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Ubuntu22.04%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.Ubuntu22.04でのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Windows11%28WSL2%29%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.Windows11(WSL2)でのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/MacOS%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.MacOSでのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【Navigation2体験】navigation2を用いた地図構築(SLAM)と自律走行の使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            【Navigation2体験】navigation2を用いた地図構築(SLAM)と自律走行の使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E4%B8%8A%E3%81%A7%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%E3%81%A8%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%E3%82%92%E5%8B%95%E3%81%8B%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.シミュレータ上で地図作成と自律走行を動かしてみる
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%28SLAM%29%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.地図作成(SLAM)の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E8%87%AA%E5%B7%B1%E4%BD%8D%E7%BD%AE%E6%8E%A8%E5%AE%9A%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.自己位置推定の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%28navigation2%29%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.自律走行(navigation2)の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_ROS2の基礎】ロボット用ミドルウェアROS2の概要とROS2コマンドの使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_ROS2の基礎】ロボット用ミドルウェアROS2の概要とROS2コマンドの使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/1_ROS2%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.ROS2の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/2_ROS2%E3%81%AE%E5%9F%BA%E7%A4%8E%E3%81%A8ROS2%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.ROS2の基礎とROS2コマンド
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/3_ROS2%E3%81%AElaunch%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.ROS2のlaunchシステム
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_ROS2のツール】シミュレータ(Gazebo)とROS2関連ツールの使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_ROS2のツール】シミュレータ(Gazebo)とROS2関連ツールの使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/1_gazebo%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.シミュレータGazeboについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/2_rqt%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.ROS2のGUIツールrqtについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/3_rviz%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3D可視化ツールRvizについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/4_tf%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.座標管理ライブラリTFについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/5_ros2bag%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.データ保存/再生ツールros2bagについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_Navigation2】自律走行の概要とnavigation2の構成
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_Navigation2】自律走行の概要とnavigation2の構成
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. 自律走行の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%28SLAM%29%E3%81%AE%E8%AA%AC%E6%98%8E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. 地図作成(SLAM)の説明
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    3. Navigation2の概要
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    3. Navigation2の概要
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#navigation2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Navigation2が提供しているツール
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nav2_map_server" class="md-nav__link">
+    <span class="md-ellipsis">
+      地図管理(nav2_map_server)パッケージ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="地図管理(nav2_map_server)パッケージ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      地図データの形式(占有格子地図)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      地図データの形式(yamlファイル)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nav2_amcl" class="md-nav__link">
+    <span class="md-ellipsis">
+      自己位置推定(nav2_amcl)パッケージ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="自己位置推定(nav2_amcl)パッケージ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amcl" class="md-nav__link">
+    <span class="md-ellipsis">
+      自己位置推定(amcl)のアルゴリズム
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nav2-planner" class="md-nav__link">
+    <span class="md-ellipsis">
+      経路計画(Nav2 Planner)パッケージ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="経路計画(Nav2 Planner)パッケージ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#global-planner" class="md-nav__link">
+    <span class="md-ellipsis">
+      global planner(経路計画の代表的なアルゴリズム)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nav2-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      経路追従+障害物回避(Nav2 Controller)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="経路追従+障害物回避(Nav2 Controller)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-planner" class="md-nav__link">
+    <span class="md-ellipsis">
+      local planner(経路追従+障害物回避の代表的なアルゴリズム)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      コストマップ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="コストマップ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      コストマップの種類
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#navigation2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Navigation2が提供しているツール
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nav2_map_server" class="md-nav__link">
+    <span class="md-ellipsis">
+      地図管理(nav2_map_server)パッケージ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="地図管理(nav2_map_server)パッケージ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      地図データの形式(占有格子地図)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      地図データの形式(yamlファイル)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nav2_amcl" class="md-nav__link">
+    <span class="md-ellipsis">
+      自己位置推定(nav2_amcl)パッケージ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="自己位置推定(nav2_amcl)パッケージ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amcl" class="md-nav__link">
+    <span class="md-ellipsis">
+      自己位置推定(amcl)のアルゴリズム
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nav2-planner" class="md-nav__link">
+    <span class="md-ellipsis">
+      経路計画(Nav2 Planner)パッケージ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="経路計画(Nav2 Planner)パッケージ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#global-planner" class="md-nav__link">
+    <span class="md-ellipsis">
+      global planner(経路計画の代表的なアルゴリズム)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nav2-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      経路追従+障害物回避(Nav2 Controller)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="経路追従+障害物回避(Nav2 Controller)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-planner" class="md-nav__link">
+    <span class="md-ellipsis">
+      local planner(経路追従+障害物回避の代表的なアルゴリズム)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      コストマップ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="コストマップ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      コストマップの種類
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="navigation2">Navigation2の概要</h1>
+<p><img alt="" src="../img/nav2_architecture.png" /></p>
+<p>Navigation2はロボットの自律走行を実現するためのメタパッケージです。<br />
+自己位置推定、地図生成、障害物検出、経路・動作計画などの機能を提供します。<br />
+Navigation2は<code>ツール</code>と<code>プラグイン</code>で構成されています。  </p>
+<hr />
+<h2 id="navigation2_1">Navigation2が提供しているツール</h2>
+<ul>
+<li>Map Server : マップのロード、提供、保存。</li>
+<li>AMCL : マップ上でロボットをローカライズ。</li>
+<li>Nav2 Planner : 障害物の周りのAからBへのパスを計画。</li>
+<li>Nav2 Controller : パスをたどるロボットを制御。</li>
+<li>Nav2 Costmap 2D : センサーデータを世界のコストマップ表現に変換。</li>
+<li>Nav2 Behavior Trees / BT Navigator : 複雑なロボットビヘイビアを構築。</li>
+<li>Nav2 Recoveries : 障害が発生した場合の回復動作の計算。</li>
+<li>Nav2 Waypoint Follower : シーケンシャルウェイポイントをフォロー。</li>
+<li>Nav2 Lifecycle Manager : サーバーのライフサイクルとウォッチドッグを管理。</li>
+<li>Nav2 Core : 独自のアルゴリズムと動作を有効にするプラグイン。</li>
+</ul>
+<p>プラグインの一覧に関しては<a href="https://navigation.ros.org/plugins/index.html">本家ページ</a>に詳細に書いてあります。</p>
+<p><img alt="" src="../img/%E6%AF%94%E8%BC%83.png" /></p>
+<p>上記の自律走行の流れにある経路計画は<code>Nav2 Planner</code>、経路追従と障害物回避は<code>Nav2 Controller</code>が対応しています。</p>
+<hr />
+<h2 id="nav2_map_server">地図管理(nav2_map_server)パッケージ</h2>
+<p>nav2_map_serverパッケージには4個のノードがあります。</p>
+<ol>
+<li>map_saver_cli(コマンドラインで地図保存)</li>
+<li>map_saver_server(サービスコールで地図保存)</li>
+<li>map_server(地図データからトピック配信)</li>
+<li>costmap_filter_info_server(コストマップフィルタに使用)</li>
+</ol>
+<p>map_saver_cliとmap_saver_serverは、受信(サブスクライブ)した地図データを、「<code>***.pgm</code>」と「<code>***.yaml</code>」の2つのファイルに保存します。</p>
+<p>map_serverは、「<code>***.pgm</code>」と「<code>***.yaml</code>」の2つのファイルから、地図データを読み出し配信(パブリッシュ)します。</p>
+<p>costmap_filter_info_serverは、mapトピックをサブスクライブし、6章で行う進入禁止エリアなどのコストマップフィルタの情報を配信します。</p>
+<hr />
+<h3 id="_1">地図データの形式(占有格子地図)</h3>
+<p>今回の地図データは占有格子地図(Occupancy Grid Map)と呼ばれています。</p>
+<ul>
+<li>各格子の占有確率(0～1)を0～255の画素値で表現した地図</li>
+<li><code>***.pgm</code>ファイルに各格子の画素値が保存されている</li>
+<li><code>***.yaml</code>ファイルに解像度や閾値などが保存されている</li>
+</ul>
+<p><img alt="" src="../img/occ_map.png" /></p>
+<hr />
+<h3 id="yaml">地図データの形式(yamlファイル)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/user/map.pgm</span><span class="w">   </span><span class="c1">#pgmファイルパス</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trinary</span><span class="w">               </span><span class="c1">#読み込み形式</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span><span class="w">            </span><span class="c1">#地図の解像度</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">-2.95</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-2.57</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1">#pgm画像の左下端地点の座標[x, y, yaw]</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nt">negate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">                   </span><span class="c1">#pgm画像の白黒反転</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">occupied_thresh</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.65</span><span class="w">       </span><span class="c1">#移動不可領域の閾値(0～1)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nt">free_thresh</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.25</span><span class="w">           </span><span class="c1">#移動可能領域の閾値(0～1)</span>
+</code></pre></div>
+<p><img alt="" src="../img/occ_yaml.png" /></p>
+<hr />
+<h2 id="nav2_amcl">自己位置推定(nav2_amcl)パッケージ</h2>
+<p>/scanと/tf(オドメトリ)と/mapから地図上の自己位置を推定し、/tf(map→odom)を出力する</p>
+<p><img alt="" src="../img/localization.drawio.png" /></p>
+<hr />
+<h3 id="amcl">自己位置推定(amcl)のアルゴリズム</h3>
+<p><img alt="" src="../img/amcl.png" /></p>
+<hr />
+<h2 id="nav2-planner">経路計画(Nav2 Planner)パッケージ</h2>
+<p>プラグイン形式で様々な経路計画アルゴリズムが使用でき、<br />
+Global CostMapをもとに経路計画を行う</p>
+<ul>
+<li>nav2_navfn_planner/NavfnPlanner(デフォルト)</li>
+<li>nav2_smac_planner/SmacPlanner2D</li>
+<li>nav2_smac_planner/SmacPlannerHybrid</li>
+<li>nav2_smac_planner/SmacPlannerLattice</li>
+<li>nav2_theta_star_planner/ThetaStarPlanner</li>
+</ul>
+<hr />
+<h3 id="global-planner">global planner(経路計画の代表的なアルゴリズム)</h3>
+<p>目標位置までの最短経路を作る</p>
+<ul>
+<li>グリッドマップベースで最短経路を探索する</li>
+<li>グローバルコストマップに基づき計算</li>
+<li>ロボットの向き等の機構(移動方向)を気にしない</li>
+</ul>
+<p><img alt="" src="../img/global_path.png" /></p>
+<hr />
+<h2 id="nav2-controller">経路追従+障害物回避(Nav2 Controller)</h2>
+<p>経路計画結果を受け取り、経路追従を行いながら障害物回避を行う。
+Local CostMapをもとに経路計画を行う</p>
+<ul>
+<li>dwb_core::DWBLocalPlanner(デフォルト)</li>
+<li>teb_local_planner::TebLocalPlannerROS</li>
+<li>nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController</li>
+</ul>
+<hr />
+<h3 id="local-planner">local planner(経路追従+障害物回避の代表的なアルゴリズム)</h3>
+<p>参照経路 + 局所的コストマップ + オドメトリを入力として受け取り、参照経路に追従しながら、障害物を回避する経路を生成する</p>
+<p>DWA(ダイナミックウインドウアプローチ)</p>
+<ul>
+<li>現在の速度付近でシミュレートして評価値が高い経路を選択</li>
+<li>評価関数はグローバルパスに近いかつ障害物から遠いほど評価値が高い</li>
+</ul>
+<p><img alt="" src="../img/DWA.jpg" /></p>
+<hr />
+<h2 id="_2">コストマップ</h2>
+<p>ロボットが移動可能な領域を考慮した地図<br />
+下記の情報を用いて地図を作成</p>
+<ul>
+<li>ロボットの外形情報</li>
+<li>取得したLRFデータ</li>
+</ul>
+<p>取得された障害物情報の位置にロボットの外形情報を置くことで衝突エリアを作成し、衝突エリアから設定された距離に応じて減衰するコストマップを生成する。<br />
+コストマップはレイヤー実装になっており、複数のレイヤーからコストマップを作成する。</p>
+<p><img alt="" src="../img/costmap.jpg" /></p>
+<hr />
+<h3 id="_3">コストマップの種類</h3>
+<p>レイヤーはプラグイン実装になっており、自作することも可能
+ROSwikiのcostmap_2d/Tutorials/Creating a New Layerを参照
+代表的なのは下記の3種類</p>
+<ul>
+<li>
+<p>StaticLayer<br />
+地図情報(nav_msgs/OccupancyGrid)から静的なコストマップを生成する</p>
+</li>
+<li>
+<p>ObstacleLayer<br />
+主にセンサ情報(sensor_msgs/LaserScan,PointCloud2)からコストマップを生成する<br />
+レイキャスティング方式(光が通れた道は障害物がない)によりコストマップを削除できる</p>
+</li>
+<li>InflationLayer<br />
+他のレイヤーから生成されたコストマップを膨らませたコストマップを生成する<br />
+走行時の壁からの距離を調整したい場合に便利</li>
+</ul>
+<p>global_costmap</p>
+<ul>
+<li>大域的経路計画(global planner)用のコストマップを作る</li>
+<li>全領域が対象となり、読み込ませた地図から生成する⇒地図は静的で動かない</li>
+<li>一般的にはstaticとinflationレイヤーを設定する</li>
+</ul>
+<p>local_costmap</p>
+<ul>
+<li>局所的経路計画(local planner)用のコストマップを作る</li>
+<li>ロボットの周辺が対象となり、LRFデータなどの障害物情報から生成する⇒地図は動的でロボットとともに動く</li>
+<li>一般的にはobstaclesとinflationレイヤーを設定する</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy;2024 Tokyo Metropolitan University
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+    
+  </body>
+</html>

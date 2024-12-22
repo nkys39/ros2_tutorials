@@ -1,0 +1,1731 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../2_ROS2%E3%81%AE%E5%9F%BA%E7%A4%8E%E3%81%A8ROS2%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>1.ROS2の概要 - ROS2 Tutorials</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ros2" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="ROS2 Tutorials" class="md-header__button md-logo" aria-label="ROS2 Tutorials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ROS2 Tutorials
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1.ROS2の概要
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ROS2 Tutorials" class="md-nav__button md-logo" aria-label="ROS2 Tutorials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ROS2 Tutorials
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【環境構築】
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            【環境構築】
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Ubuntu22.04%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28ROS2%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.Ubuntu22.04でのROS2Humble環境構築(ROS2デフォルト)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Ubuntu22.04%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.Ubuntu22.04でのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Windows11%28WSL2%29%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.Windows11(WSL2)でのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/MacOS%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.MacOSでのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【Navigation2体験】navigation2を用いた地図構築(SLAM)と自律走行の使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            【Navigation2体験】navigation2を用いた地図構築(SLAM)と自律走行の使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E4%B8%8A%E3%81%A7%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%E3%81%A8%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%E3%82%92%E5%8B%95%E3%81%8B%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.シミュレータ上で地図作成と自律走行を動かしてみる
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%28SLAM%29%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.地図作成(SLAM)の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E8%87%AA%E5%B7%B1%E4%BD%8D%E7%BD%AE%E6%8E%A8%E5%AE%9A%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.自己位置推定の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%28navigation2%29%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.自律走行(navigation2)の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_ROS2の基礎】ロボット用ミドルウェアROS2の概要とROS2コマンドの使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_ROS2の基礎】ロボット用ミドルウェアROS2の概要とROS2コマンドの使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    1.ROS2の概要
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    1.ROS2の概要
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 自律走行ロボットの用途
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 自律走行に必要なソフトウェア
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.ロボット用ミドルウェアについて
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. ROS2とは
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. ROS2が提供してくれるもの
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ros1ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. ROS1とROS2の比較
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. ROS1とROS2の比較">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ros1ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS1とROS2の比較
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ros1ros2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS1→ROS2変化
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-ros1ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. ROS1,ROS2のディストリビューション
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linuxubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      ※. LinuxとUbuntu
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      端末でのコマンド操作練習
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      ※. ソフトウェアライセンスについて
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS2の概要まとめ
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_ROS2%E3%81%AE%E5%9F%BA%E7%A4%8E%E3%81%A8ROS2%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.ROS2の基礎とROS2コマンド
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_ROS2%E3%81%AElaunch%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.ROS2のlaunchシステム
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_ROS2のツール】シミュレータ(Gazebo)とROS2関連ツールの使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_ROS2のツール】シミュレータ(Gazebo)とROS2関連ツールの使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/1_gazebo%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.シミュレータGazeboについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/2_rqt%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.ROS2のGUIツールrqtについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/3_rviz%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3D可視化ツールRvizについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/4_tf%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.座標管理ライブラリTFについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/5_ros2bag%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.データ保存/再生ツールros2bagについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_Navigation2】自律走行の概要とnavigation2の構成
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_Navigation2】自律走行の概要とnavigation2の構成
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. 自律走行の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%28SLAM%29%E3%81%AE%E8%AA%AC%E6%98%8E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. 地図作成(SLAM)の説明
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/Navigation2%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Navigation2の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 自律走行ロボットの用途
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 自律走行に必要なソフトウェア
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.ロボット用ミドルウェアについて
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. ROS2とは
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. ROS2が提供してくれるもの
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ros1ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. ROS1とROS2の比較
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. ROS1とROS2の比較">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ros1ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS1とROS2の比較
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ros1ros2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS1→ROS2変化
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-ros1ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. ROS1,ROS2のディストリビューション
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linuxubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      ※. LinuxとUbuntu
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      端末でのコマンド操作練習
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      ※. ソフトウェアライセンスについて
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS2の概要まとめ
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="ros2">ROS2の概要</h1>
+<p>自律走行ロボットを作る際に、ROS2を使うと何がうれしいのかという観点から、ROSの概要について説明していきます。</p>
+<hr />
+<h2 id="1">1. 自律走行ロボットの用途</h2>
+<p>まず自律走行ロボットは何ができて、何に使えるのかを考えます。</p>
+<ul>
+<li>何ができる？<ul>
+<li>目的地まで自律的に走行してくれる</li>
+</ul>
+</li>
+<li>何に使える？</li>
+</ul>
+<p><img alt="ロボットの用途.png" src="../img/1/image1.png" /></p>
+<p><mark><strong>自律走行ロボットは様々な用途で使うことができます。</strong></mark></p>
+<hr />
+<h2 id="2">2. 自律走行に必要なソフトウェア</h2>
+<p>自律走行を実現するために必要な機能は以下のようになります。</p>
+<ul>
+<li>地図(地図作成)<br />
+    自律走行を行う環境の地図を作成する  <ol>
+<li>ロボットを走行させて地図を作成する(SLAM(Simultaneous Localization and Mapping))  </li>
+<li>図面からの手書きで地図を作成する  </li>
+</ol>
+</li>
+<li>自己位置推定<br />
+    現在ロボットが地図内のどこにいるか推定する  </li>
+<li>経路計画<br />
+    現在地から目的地までの経路を計画する  </li>
+<li>経路追従<br />
+    計画した経路に沿うようにロボットを制御する  </li>
+<li>障害物停止・回避<br />
+    走行中に現れる障害物を検知し、停止・回避動作を行う  </li>
+</ul>
+<p>これらの機能は1つずつでも研究分野になっているほど高度な内容になります。</p>
+<p><mark><strong>自律走行を実現するためには多数の高度なソフトウェアが必要</strong></mark></p>
+<p>これに加えて、自律走行ロボットの実現には、</p>
+<ul>
+<li>センサのI/O</li>
+<li>ロボット本体のモーター制御</li>
+<li>ユーザーインターフェース(UI)</li>
+<li>コンテンツ(エンターテイメント関連の場合)</li>
+<li>複数台ロボットを統合管理・制御する上位システム<br />
+etc...</li>
+</ul>
+<p>などのソフトウェアが必要になります。</p>
+<p><img alt="自律走行に必要なソフトウェア.png" src="../img/1/image2.png" /></p>
+<hr />
+<h2 id="3">3.ロボット用ミドルウェアについて</h2>
+<p>自律走行を実現するには多くのソフトウェアが必要です。
+これらのソフトウェアを開発していくこと考えます。</p>
+<p>全てのソフトウェアを1から作成する場合、時間がかかります。</p>
+<p><mark>→コアなところ以外はあり物を使いたい(オープンソースやライブラリなど)</mark></p>
+<p>しかし、データ形式が合わない、プログラミング言語が違うなどで、うまく進まないといったことが起こります。<br />
+さらに、開発段階では、センサやアルゴリズムの追加/削除/変更などの試行錯誤が多く発生します。  </p>
+<ul>
+<li>従来の開発スタイル<br />
+単一の大きなプログラムとして開発してしまうと変更時に確認する項目が増えたり、一部の機能を他の用途で使いたい場合に大変であったりします。<br />
+<mark>⇒再利用性がない(センサ等の変更に全コードを見直す必要がある)</mark></li>
+</ul>
+<p><img alt="画像10.png" src="../img/1/image3.png" /></p>
+<p><mark>これらの開発中に発生する課題を解決する方法としてロボット用ミドルウェアというものがあります。</mark></p>
+<ul>
+<li>ロボット用ミドルウェアを用いた開発スタイル<ul>
+<li>ソフトウェアを部品化し、ソフトウェア間の通信インターフェース(データ形式)を共通化</li>
+<li>同じ通信インターフェースであれば部品の入れ替えが簡単</li>
+<li>異なるプログラミング言語のソフトウェア間の通信も可能</li>
+<li>入出力などでのミドルウェア特有のプログラム記述のおかげで他人のプログラムでも見通しが立てやすい</li>
+<li>通信インターフェイスが共通のためPC間やクラウド経由の通信も容易</li>
+<li><mark>ただし、デメリットとして通信の遅延や信頼性について考える必要が出てくる</mark></li>
+</ul>
+</li>
+</ul>
+<p><img alt="画像11.png" src="../img/1/image4.png" /></p>
+<p><mark><strong>ロボット用ミドルウェアを用いることで開発効率が向上</strong></mark></p>
+<hr />
+<h2 id="4-ros2">4. ROS2とは</h2>
+<ul>
+<li>
+<p>ROS2とは、Robot Operating System2の略で、ロボットソフトウェアプラットフォーム(ミドルウェア)の1つ。</p>
+</li>
+<li>
+<p>ROS2の概要</p>
+<ul>
+<li>世界で最も使われているロボット用ミドルウェアROSの次世代版</li>
+<li>便利な開発ツール・ライブラリが豊富(Rviz、rqt、Gazebo、Navigation2、MoveIt2 etc.)</li>
+<li>サポート言語：(公式)C++,Python3、(非公式)Java,C#,Node.js,Rust,Go,Julia,Objective-C,Swift</li>
+<li>開発管理団体：Open Robotics、ROS2 Technical Steering Committee</li>
+<li>国内コミュニティ：ROS Japan User Group</li>
+<li>ライセンス：BSD(商用利用可能)</li>
+<li>対応OS：Linux、MacOS、Windows10</li>
+</ul>
+</li>
+</ul>
+<p>クラウド連携やMatlab連携、ゲームエンジン連携(Unity,UE4/5)も進んでいる  </p>
+<p><mark><strong>ユーザ数が多く、関連ツール・ライブラリが豊富なため最も利用されている</strong></mark></p>
+<hr />
+<h2 id="5-ros2">5. ROS2が提供してくれるもの</h2>
+<p>ROS2が提供してくれるものとして以下の4個が挙げられます。</p>
+<ul>
+<li>通信ライブラリ<br />
+    ソフトウェア間のやり取り(プロセス間通信)を容易にする通信ライブラリを提供(ほぼ意識することなく扱える)</li>
+<li>開発ツール<br />
+    起動、監視、デバッグ、可視化、シミュレーションなどの開発に必要なツールを提供</li>
+<li>要素技術パッケージ<br />
+    センサ、環境認識、動作計画、制御などのロボットを動かすために必要な要素技術をオープンソースとして大量に提供</li>
+<li>エコシステム<br />
+    開発者、研究者などがソフトウェアをオープンソースとして公開し、手元で簡単に動作検証(プロトタイピング)できるエコシステムを提供(ただし、商用利用にはライセンスに注意)</li>
+</ul>
+<hr />
+<h2 id="6-ros1ros2">6. ROS1とROS2の比較</h2>
+<h3 id="ros1ros2">ROS1とROS2の比較</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ROS1</th>
+<th>ROS2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ロボットの同時利用数</td>
+<td>単体ロボットのみ対応(ROSマスタと呼ばれる単一障害点が存在)</td>
+<td>複数台ロボットにも対応(DDS(Data Distribution Service)の採用により単一障害点なし)</td>
+</tr>
+<tr>
+<td>計算資源</td>
+<td>高性能計算機のみ対応(コアプログラムがC++)</td>
+<td>組み込みプラットフォームにも対応(コアプログラムがC)</td>
+</tr>
+<tr>
+<td>リアルタイム制御</td>
+<td>特別な作法で記述(ros_controlやnodelet)</td>
+<td>一般的なプロセス内・プロセス間通信(ros2_controlやexecutor(nodeletを標準化))</td>
+</tr>
+<tr>
+<td>ネットワーク品質</td>
+<td>高品質のみ対応(TCP通信ベースの独自通信プロトコルTCPROS)</td>
+<td>欠損や遅延も許容(UDP通信ベースとQoS機能を備えたDDSの通信プロトコルRTPS(Real-Time Publish-Subscribe))</td>
+</tr>
+<tr>
+<td>プログラミング形式</td>
+<td>最大限にユーザの自由</td>
+<td>柔軟性を残しながらも形式を固定(executorやライフサイクルなどの新機能利用時は記述形式が固定)</td>
+</tr>
+<tr>
+<td>アプリケーション品質</td>
+<td>研究、学術用途向け</td>
+<td>製品化にも対応(製品化の際に課題となっていた部分(通信やセキュリティなど)の強化)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>ROS1は主にプロトタイピングや研究開発に利用されていたが、そのまま製品化するにはいくつか問題点があった。  </li>
+<li>ROS2では製品化に対応できるように改善が行われている</li>
+</ul>
+<hr />
+<h3 id="ros1ros2_1">ROS1→ROS2変化</h3>
+<p><strong>改善機能</strong></p>
+<ul>
+<li><mark>マルチOS対応</mark>(MacOSやWindows)</li>
+<li><mark>Pythonのバージョンアップ</mark>(Python2→Python3)によりDeep Learningが扱いやすくなった</li>
+<li><mark>launchがXML→Python3</mark>になったことでできることで起動時に条件設定などがしやすくなった(XML記述もサポートされているがROS2の新機能は非対応)</li>
+<li><mark>パラメータの記述方式が統一</mark>(dynamic_reconfigureのような標準化)され、パッケージを利用する際の見通しが良くなった。注意点としてROS1ではROSマスタがパラメータサーバの役割をしていたので、パラメータをグローバル変数のように扱えたが廃止されたのでそのようには扱えない。ROS2は各ノードがそれぞれパラメータを持つので、各ノードに問い合わせる形式になる。</li>
+<li>サービス通信が基本非同期通信になった(同期通信も可能)</li>
+<li>アクション通信がコアライブラリに正式実装された</li>
+<li><mark>ROS1のプロセス内通信方法であったnodeletの書き方が標準化されcomponet+executorとして推奨の書き方になった</mark></li>
+</ul>
+<p><strong>新機能</strong></p>
+<ul>
+<li><mark>通信ライブラリにDDSが採用</mark>されたことで単一障害点であったROSマスタ(roscore)廃止</li>
+<li><mark>コアプログラムC++→C</mark>により、組み込みマイコンや多くの言語でROS2を扱えるようになった</li>
+<li>通信ライブラリにDDSが採用されたことで<mark>QoSを変更することで通信品質が制御可能</mark>になった</li>
+<li>DDSの種類を実行時に変更可能になった</li>
+<li><mark>ノードの状態管理のためにライフサイクルが導入可能</mark>になり、起動順序制御や外部からの障害復帰処理が可能になった</li>
+<li><mark>セキュリティ機能</mark>として、ノードの認証(偽ノードではないかの審議判定)、ドメイン(ROS_DOMAIN)へのアクセス制御、メッセージ通信へのアクセス制御、コンピュータ間通信での暗号鍵認証などが新規実装された</li>
+<li>linux-low-latencyカーネルによる<mark>リアルタイム制御が可能</mark>になった</li>
+<li>ROS1ノードとの相互接続機能</li>
+</ul>
+<hr />
+<h2 id="7-ros1ros2">7. ROS1,ROS2のディストリビューション</h2>
+<p>各ディストリビューションの名前はアルファベット順になっており、毎年(5月23日)新ディストリビューションが公開される。Ubuntuの長期サポートと連動して、2年毎に長期サポートが公開されます。</p>
+<table>
+<thead>
+<tr>
+<th>バージョン名</th>
+<th>公開日</th>
+<th>サポート終了日</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROS1</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Kinetic Kame(ROS1)</td>
+<td>2016年5月23日</td>
+<td>2021年5月(EOL済み)</td>
+<td>Ubuntu16.04</td>
+</tr>
+<tr>
+<td>Melodic Morenia(ROS1)</td>
+<td>2018年5月23日</td>
+<td>2023年5月(EOL済み)</td>
+<td>Ubuntu18.04</td>
+</tr>
+<tr>
+<td>Noetic Ninjemys(ROS1)</td>
+<td>2020年5月23日</td>
+<td>2025年5月</td>
+<td>Ubuntu20.04、ROS1最終バージョン</td>
+</tr>
+<tr>
+<td>ROS2</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Foxy Fitzroy</td>
+<td>2020年6月5日</td>
+<td>2023年5月(EOL済み)</td>
+<td>Ubuntu20.04、ROS2長期サポート</td>
+</tr>
+<tr>
+<td>Galactic Geochelone</td>
+<td>2021年5月23日</td>
+<td>2022年11月(EOL済み)</td>
+<td>Ubuntu20.04</td>
+</tr>
+<tr>
+<td>Humble Hawksbill</td>
+<td>2022年5月23日</td>
+<td>2027年5月</td>
+<td>Ubuntu22.04、ROS2初の5年長期サポート</td>
+</tr>
+<tr>
+<td>Iron Irwini</td>
+<td>2023年5月23日</td>
+<td>2024年11月(EOL済み)</td>
+<td>Ubuntu22.04</td>
+</tr>
+<tr>
+<td>Jazzy Jalisco</td>
+<td>2024年5月23日</td>
+<td>2029年5月</td>
+<td>Ubuntu22.04、ROS25年長期サポート最新バージョン</td>
+</tr>
+<tr>
+<td>Rolling Ridley</td>
+<td>2020年6月</td>
+<td>未定</td>
+<td>ROS2の継続開発用バージョン(新機能実験用)</td>
+</tr>
+</tbody>
+</table>
+<p>ROS1はNoeticが最終で2025年5月までサポート(ラスト1年)</p>
+<p>ROS2は現状最新のJazzyがまだ半年前に出たばかりのため、本講習会では<mark>Ubuntu22.04+ROS2(Humble)</mark>を対象として行います。(最新の場合、OSSの更新が追いついていないケースがあるため一番使いやすいとは限りません)</p>
+<p>MacOS、Windowsの場合、異なる部分や使えない機能などが少しありますが基本機能や概念などは本資料を流用できるかと思います。</p>
+<hr />
+<h2 id="linuxubuntu">※. LinuxとUbuntu</h2>
+<ul>
+<li>Linuxはwindowsと同じOS(オペレーションシステム)</li>
+<li>UbuntuはLinuxディストリビューションの1つ</li>
+</ul>
+<p><img alt="画像12.png" src="../img/1/image5.png" /></p>
+<ul>
+<li>ROS2は主に端末上でコマンド(文字)を用いて操作します</li>
+<li>端末を開くショートカットキーがあるので積極的に使いましょう</li>
+</ul>
+<hr />
+<h2 id="_1">端末でのコマンド操作練習</h2>
+<p><img alt="画像13.png" src="../img/1/image6.png" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>~/test<span class="w">  　　　　       </span><span class="c1"># ~/にtestフォルダを作成</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>ls<span class="w"> </span>~/<span class="w">                       </span><span class="c1"># ~/にtestフォルダの作成を確認</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>~/test<span class="w">                   </span><span class="c1"># ~/test/に移動</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>touch<span class="w"> </span>~/test/test.txt<span class="w">       </span><span class="c1"># ~/test/内にtest.txtファイルを作成</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>ls<span class="w"> </span>~/test/<span class="w">                  </span><span class="c1"># ~/test/の内容を確認</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>rm<span class="w"> </span>~/test/test.txt<span class="w">          </span><span class="c1"># ~/test/test.txtを削除</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>ls<span class="w"> </span>~/test/<span class="w">                  </span><span class="c1"># ~/test/の内容を確認</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nb">cd</span><span class="w"> </span>..<span class="w">               </span><span class="c1"># 1つ上のフォルダ階層に移動</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>rm<span class="w"> </span>-r<span class="w"> </span>~/test/<span class="w">               </span><span class="c1"># ~/test/フォルダを削除</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>ls<span class="w"> </span>~/<span class="w">                       </span><span class="c1"># ~/の内容を確認</span>
+</code></pre></div>
+<p><img alt="画像14.png" src="../img/1/image7.png" /></p>
+<table>
+<thead>
+<tr>
+<th>コマンド名</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ls</td>
+<td>フォルダの内容をリスト形式で表示する</td>
+</tr>
+<tr>
+<td>cd [フォルダ名]</td>
+<td>指定したフォルダに移動する</td>
+</tr>
+<tr>
+<td>cd ..</td>
+<td>1つ上のフォルダ階層に移動する</td>
+</tr>
+<tr>
+<td>mkdir [フォルダ名]</td>
+<td>フォルダを作成する</td>
+</tr>
+<tr>
+<td>touch [ファイル名]</td>
+<td>ファイルを作成する</td>
+</tr>
+<tr>
+<td>gedit [ファイル名]</td>
+<td>ファイルを作成し、gedit(テキストエディタ)を開く</td>
+</tr>
+<tr>
+<td>rm [ファイル/フォルダ名]</td>
+<td>ファイル/フォルダを削除する</td>
+</tr>
+<tr>
+<td>mv [移動元] [移動先]</td>
+<td>ファイル/フォルダを移動する</td>
+</tr>
+<tr>
+<td>cp [移動元] [移動先]</td>
+<td>ファイル/フォルダをコピーする</td>
+</tr>
+<tr>
+<td>find [検索キーワード]</td>
+<td>ファイル/フォルダを検索する</td>
+</tr>
+<tr>
+<td>grep [検索キーワード]</td>
+<td>テキスト内を文字列検索する</td>
+</tr>
+<tr>
+<td>history</td>
+<td>コマンドの入力履歴を表示する</td>
+</tr>
+<tr>
+<td>clear</td>
+<td>端末内の表示をクリアする</td>
+</tr>
+<tr>
+<td>ifconfig</td>
+<td>接続されているネットワークの状況を確認する</td>
+</tr>
+<tr>
+<td>ping [IPアドレス]</td>
+<td>ネットワーク上にあるコンピュータまでの通信経路確認</td>
+</tr>
+<tr>
+<td>dmesg</td>
+<td>カーネルが出力した情報を確認する(USBの認識確認など)</td>
+</tr>
+<tr>
+<td>chmod +x [ファイル名]</td>
+<td>ファイルに実行権限を付与する</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>他にもオプション機能などがある<br />
+    例：ls -l  ・・・ファイルごとの詳細を表示する</li>
+<li>もっと知りたい場合はインターネットで”Linux コマンド”で検索</li>
+<li><mark>よく使うショートカットキー</mark><br />
+    <mark>↑↓キー　   入力履歴を参照してくれる</mark><br />
+    <mark>Tabキー　    入力を補間・予測してくれる</mark><br />
+    <mark>Ctrl + C　　 端末で実行中の処理を終了する(プログラムの終了など)</mark>  </li>
+</ul>
+<hr />
+<h2 id="_2">※. ソフトウェアライセンスについて</h2>
+<ul>
+<li>寛容型ライセンス<ul>
+<li>自由な改変可能</li>
+<li>ソースコードを開示しなくてもよい</li>
+<li>ライセンスと著作権を表記で頒布可能</li>
+<li>代表例：BSD, MIT, Apache, TOPPERS等</li>
+</ul>
+</li>
+<li>
+<p>互恵型ライセンス</p>
+<ul>
+<li>自由な改変可能</li>
+<li>ソースコードの開示を求める</li>
+<li>ライセンスと著作権を表記で頒布可能</li>
+<li>代表例：GPL, LGPL, MPL等</li>
+<li>その他参考URL : http://www.jasa.or.jp/TOP/download/technical/ETIoT2015_JG-2text.pdf</li>
+</ul>
+</li>
+<li>
+<p>参考書籍：</p>
+<ul>
+<li>タイトル：OSSライセンスの教科書</li>
+<li>出版社：技術評論社</li>
+<li>著者：上田 理</li>
+<li>監修：岩井 久美子</li>
+</ul>
+</li>
+</ul>
+<p><mark>オープンソースを利用する場合、ソフトウェアライセンスを確認する</mark></p>
+<hr />
+<h2 id="ros2_1">ROS2の概要まとめ</h2>
+<ul>
+<li>
+<p>自律走行ロボットは様々な用途(<mark>案内・清掃・警備・運搬など</mark>)で使うことができる</p>
+</li>
+<li>
+<p>自律走行を行うためには<mark>多数の高度なソフトウェアが必要</mark></p>
+</li>
+<li>
+<p>ロボット用ミドルウェアを用いることで<mark>ソフトウェアが部品化でき、開発効率が向上</mark></p>
+</li>
+<li>
+<p>ROS2はロボット用ミドルウェアの中でも、<mark>ユーザ数が多く、オープンソースソフトウェアが豊富で、関連ツールも充実</mark></p>
+</li>
+</ul>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy;2024 Tokyo Metropolitan University
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+    
+  </body>
+</html>

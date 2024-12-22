@@ -1,3 +1,109 @@
-site_name: My Docs
+site_name: ROS2 Tutorials
+docs_dir: 'docs'
 theme:
   name: material
+  # name: 'rtd-dropdown'
+  language: ja
+  features:
+    # - navigation.tabs
+    # - navigation.tabs.sticky
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  # - pymdownx.tilde
+
+copyright: "Copyright &copy;2024 Tokyo Metropolitan University"
+# extra_css:
+    # ユーザー個別で効かせたい設定を記述.
+    # - css/custom.css
+
+# plugins:
+#   - with-pdf:
+#       author: "東京都立大学 久保田研究室"
+#       #copyright: ANY TEXT
+#       #
+#       #cover: false
+#       #back_cover: true
+#       # cover_title: TITLE TEXT
+#       cover_subtitle: "ros2_tutorials"
+#       #custom_template_path: TEMPLATES PATH
+#       #
+#       #toc_title: TOC TITLE TEXT
+#       #heading_shift: false
+#       # toc_level: 2
+#       ordered_chapter_level: 2
+#       #excludes_children:
+#       #    - 'release-notes/:upgrading'
+#       #    - 'release-notes/:changelog'
+#       #
+#       #exclude_pages:
+#       #    - 'bugs/'
+#       #    - 'appendix/contribute/'
+#       #convert_iframe:
+#       #    - src: IFRAME SRC
+#       #      img: POSTER IMAGE URL
+#       #      text: ALTERNATE TEXT
+#       #    - src: ...
+#       #two_columns_level: 3
+#       #
+#       #render_js: true
+#       #headless_chrome_path: headless-chromium
+#       #
+#       #output_path: any-place/document.pdf
+#       #enabled_if_env: ENABLE_PDF_EXPORT
+#       #
+#       #debug_html: true
+#       #show_anchors: true
+#       #verbose: true
+
+# plugins:
+#   - drawio-exporter:
+#       cache_dir: "drawio-exporter"
+#       drawio_executable: null
+#       drawio_args: ["--no-sandbox"]
+#       format: svg
+#       embed_format: "{img_open}{img_src}{img_close}"
+#       sources: "*.drawio"
+
+nav: 
+  - Home: index.md
+  - 【環境構築】: 
+    - 目次: chapter0/index.md
+    - 1.Ubuntu22.04でのROS2Humble環境構築(ROS2デフォルト): chapter0/Ubuntu22.04でのROS2Humble環境構築(ROS2デフォルト).md
+    - 2.Ubuntu22.04でのROS2Humble環境構築(pixiによる簡略版): chapter0/Ubuntu22.04でのROS2Humble環境構築(pixiによる簡略版).md
+    - 3.Windows11(WSL2)でのROS2Humble環境構築(pixiによる簡略版): chapter0/Windows11(WSL2)でのROS2Humble環境構築(pixiによる簡略版).md
+    - 4.MacOSでのROS2Humble環境構築(pixiによる簡略版): chapter0/MacOSでのROS2Humble環境構築(pixiによる簡略版).md
+  - 【Navigation2体験】navigation2を用いた地図構築(SLAM)と自律走行の使い方:
+    - 目次: chapter3/index.md
+    - 1.シミュレータ上で地図作成と自律走行を動かしてみる: chapter3/シミュレータ上で地図作成と自律走行を動かしてみる.md
+    - 2.地図作成(SLAM)の入出力について: chapter3/地図作成(SLAM)の入出力について.md
+    - 3.自己位置推定の入出力について: chapter3/自己位置推定の入出力について.md
+    - 4.自律走行(navigation2)の入出力について: chapter3/自律走行(navigation2)の入出力について.md
+  - 【補足資料_ROS2の基礎】ロボット用ミドルウェアROS2の概要とROS2コマンドの使い方:
+    - 目次: chapter1/index.md
+    - 1.ROS2の概要: chapter1/1_ROS2の概要.md
+    - 2.ROS2の基礎とROS2コマンド: chapter1/2_ROS2の基礎とROS2コマンド.md
+    - 3.ROS2のlaunchシステム: chapter1/3_ROS2のlaunchシステム.md
+  - 【補足資料_ROS2のツール】シミュレータ(Gazebo)とROS2関連ツールの使い方:
+    - 目次: chapter2/index.md
+    - 1.シミュレータGazeboについて: chapter2/1_gazeboの概要.md
+    - 2.ROS2のGUIツールrqtについて: chapter2/2_rqtの概要.md
+    - 3.3D可視化ツールRvizについて: chapter2/3_rvizの概要.md
+    - 4.座標管理ライブラリTFについて: chapter2/4_tfライブラリについて.md
+    - 5.データ保存/再生ツールros2bagについて: chapter2/5_ros2bagの使い方.md
+  - 【補足資料_Navigation2】自律走行の概要とnavigation2の構成:
+    - 目次: chapter5/index.md
+    - 1. 自律走行の概要: chapter5/自律走行の概要.md
+    - 2. 地図作成(SLAM)の説明: chapter5/地図作成(SLAM)の説明.md
+    - 3. Navigation2の概要: chapter5/Navigation2の概要.md
+
+
+  

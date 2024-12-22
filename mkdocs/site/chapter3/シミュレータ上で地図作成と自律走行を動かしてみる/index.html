@@ -1,0 +1,1298 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%28SLAM%29%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>1.シミュレータ上で地図作成と自律走行を動かしてみる - ROS2 Tutorials</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="ROS2 Tutorials" class="md-header__button md-logo" aria-label="ROS2 Tutorials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ROS2 Tutorials
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1.シミュレータ上で地図作成と自律走行を動かしてみる
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ROS2 Tutorials" class="md-nav__button md-logo" aria-label="ROS2 Tutorials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ROS2 Tutorials
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【環境構築】
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            【環境構築】
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Ubuntu22.04%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28ROS2%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.Ubuntu22.04でのROS2Humble環境構築(ROS2デフォルト)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Ubuntu22.04%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.Ubuntu22.04でのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Windows11%28WSL2%29%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.Windows11(WSL2)でのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/MacOS%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.MacOSでのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【Navigation2体験】navigation2を用いた地図構築(SLAM)と自律走行の使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            【Navigation2体験】navigation2を用いた地図構築(SLAM)と自律走行の使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    1.シミュレータ上で地図作成と自律走行を動かしてみる
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    1.シミュレータ上で地図作成と自律走行を動かしてみる
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#slam" class="md-nav__link">
+    <span class="md-ellipsis">
+      シミュレータ上で地図作成(SLAM)を動かしてみる
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slam_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      地図作成(SLAM)で作成した地図を保存する
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      シミュレータ上で自己位置推定を動かしてみる
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      シミュレータ上で自律走行を動かしてみる
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slamexplore" class="md-nav__link">
+    <span class="md-ellipsis">
+      シミュレータ上で地図作成(SLAM)中に自律走行(explore)を動かしてみる
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%28SLAM%29%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.地図作成(SLAM)の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E8%87%AA%E5%B7%B1%E4%BD%8D%E7%BD%AE%E6%8E%A8%E5%AE%9A%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.自己位置推定の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%28navigation2%29%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.自律走行(navigation2)の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_ROS2の基礎】ロボット用ミドルウェアROS2の概要とROS2コマンドの使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_ROS2の基礎】ロボット用ミドルウェアROS2の概要とROS2コマンドの使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/1_ROS2%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.ROS2の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/2_ROS2%E3%81%AE%E5%9F%BA%E7%A4%8E%E3%81%A8ROS2%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.ROS2の基礎とROS2コマンド
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/3_ROS2%E3%81%AElaunch%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.ROS2のlaunchシステム
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_ROS2のツール】シミュレータ(Gazebo)とROS2関連ツールの使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_ROS2のツール】シミュレータ(Gazebo)とROS2関連ツールの使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/1_gazebo%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.シミュレータGazeboについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/2_rqt%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.ROS2のGUIツールrqtについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/3_rviz%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3D可視化ツールRvizについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/4_tf%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.座標管理ライブラリTFについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/5_ros2bag%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.データ保存/再生ツールros2bagについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_Navigation2】自律走行の概要とnavigation2の構成
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_Navigation2】自律走行の概要とnavigation2の構成
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. 自律走行の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%28SLAM%29%E3%81%AE%E8%AA%AC%E6%98%8E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. 地図作成(SLAM)の説明
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/Navigation2%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Navigation2の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#slam" class="md-nav__link">
+    <span class="md-ellipsis">
+      シミュレータ上で地図作成(SLAM)を動かしてみる
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slam_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      地図作成(SLAM)で作成した地図を保存する
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      シミュレータ上で自己位置推定を動かしてみる
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      シミュレータ上で自律走行を動かしてみる
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slamexplore" class="md-nav__link">
+    <span class="md-ellipsis">
+      シミュレータ上で地図作成(SLAM)中に自律走行(explore)を動かしてみる
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="_1">シミュレータ上で地図作成と自律走行を動かしてみる</h1>
+<p>まずは、turtlebot3シミュレーションでROS2の地図作成と自律走行を動かしてみましょう。  </p>
+<p>手順としては下記になります。<br />
+1.SLAMで地図を作成する<br />
+2.地図を保存する<br />
+3.地図を読み込み、自己位置推定をする<br />
+4.自己位置推定をしながら自律走行する  </p>
+<p>使用するlaunchファイルがあるパッケージは下記です。</p>
+<ul>
+<li>turtlebot3_gazebo</li>
+<li>nav2_bringup</li>
+<li>slam_toolbox  </li>
+</ul>
+<p>インストールした時点で地図作成と自律走行を動かすためのlaunchファイルは<code>/opt/ros/humble/share/[パッケージ名]/launch/ディレクトリ</code>にあります。<br />
+動かすことはできますが、このままでは編集ができないので、動かすためのlaunchファイルを<code>lecture_nav2_bringupパッケージ</code>にコピーしてまとめてあります。  </p>
+<hr />
+<h2 id="slam">シミュレータ上で地図作成(SLAM)を動かしてみる</h2>
+<p>turtlebot3シミュレーションとrivzを起動します。<br />
+さらに<code>nav2_bringupパッケージ</code>の<code>slam_launch.py</code>に<code>use_sim_time:True</code>の引数を与えて起動します。<br />
+<code>use_sim_time:True</code>はシミュレーション時間を使用するという意味で、実機の場合には<code>False</code>にします。<br />
+launchファイルの引数に何が指定できるかは、<code>ros2 launch [パッケージ名] [launchファイル名] -s</code>で確認できます。<br />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># turtlebot3シミュレーションをturtlebot3_worldで起動</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>turtlebot3_world.launch.py
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Rviz2(navigation2の設定済み)を起動</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nav2_bringup<span class="w"> </span>rviz_launch.py
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># SLAMの起動(slam_toolboxパッケージ)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nav2_bringup<span class="w"> </span>slam_launch.py<span class="w"> </span>use_sim_time:<span class="o">=</span>True
+</code></pre></div>
+起動に成功するとrvizは下記のようになります。</p>
+<p><img alt="" src="../img/slam.png" /></p>
+<p>速度指令をパブリッシュして地図を作成しましょう。</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># ジョイスティックがある場合</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>lecture_nav2_bringup<span class="w"> </span>joy_teleop_launch.py
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># キーボードで操作する場合</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>teleop_twist_keyboard
+</code></pre></div>
+ジョイスティックで操作の場合、1番ボタン(低速)または,2番ボタン(高速)を押しながら左スティックを倒した方向に移動します。  <br />
+キーコンフィグはteleop_twist_joyノードのパラメータで変更可能です</p>
+<p><img alt="" src="../img/slam.gif" /></p>
+<hr />
+<h2 id="slam_1">地図作成(SLAM)で作成した地図を保存する</h2>
+<p>navigation2で地図を保存するにはmap_serverパッケージを用います  </p>
+<ul>
+<li>map_serverパッケージには地図保存の方法が2種類提供されています<ul>
+<li>map_saver_cliノード<br />
+<code>-f [保存先パス]</code>オプションで任意名で保存ができます。
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ros2 run nav2_map_server map_saver_cli -f ~/map
+</code></pre></div></li>
+<li>map_saver_serverノード
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># 今回はslam_launch.py内で立ち上げているので下記は不要</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># ros2 run nav2_map_server map_saver_server</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># ros2 lifecycle set /map_saver 1</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># ros2 lifecycle set /map_saver 3</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># サービスコマンドで地図保存ができます</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/map_saver/save_map<span class="w"> </span>nav2_msgs/srv/SaveMap<span class="w"> </span><span class="s2">&quot;{map_topic: map, map_url: /home/user/map, image_format: pgm, map_mode: trinary, free_thresh: 0.25, occupied_thresh: 0.65}&quot;</span>
+</code></pre></div></li>
+</ul>
+</li>
+</ul>
+<p>上記のどちらかを実行すると、<code>~/map.yaml</code>と<code>~/map.pgm</code>が作成されます。<br />
+この<code>pgmファイル</code>と<code>yamlファイル</code>がROS2での自律走行の地図になります。<br />
+詳細については【5章】で説明しますが、<code>pgmファイル</code>が占有格子地図の各グリッドの値を画像ファイルとして持ち、<code>yamlファイル</code>が原点座標などの設定値を持っています。  </p>
+<p><img alt="" src="../img/map.png" />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># ~/map.yaml</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/user/map.pgm</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trinary</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">-2.95</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-2.57</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nt">negate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="nt">occupied_thresh</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.65</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="nt">free_thresh</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.25</span>
+</code></pre></div></p>
+<p>ここまでで、1度すべての端末を終了します。</p>
+<hr />
+<h2 id="_2">シミュレータ上で自己位置推定を動かしてみる</h2>
+<p>先ほど保存した地図上で自己位置推定(地図上での自分の位置を推定する)を動かしてみましょう。  </p>
+<p>turtlebot3シミュレーションとrivzを再度起動します。<br />
+さらに<code>nav2_bringupパッケージ</code>の<code>localization_launch.py</code>に<code>map:=[マップのyamlファイルパス]</code>と<code>use_sim_time:=True</code>の引数を与えて起動します。<br />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># turtlebot3シミュレーションをturtlebot3_worldで起動</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>turtlebot3_world.launch.py
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># Rviz2(navigation2の設定済み)を起動</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nav2_bringup<span class="w"> </span>rviz_launch.py
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># 自己位置推定の起動</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nav2_bringup<span class="w"> </span>localization_launch.py<span class="w"> </span>map:<span class="o">=</span>/home/user/map.yaml<span class="w"> </span>use_sim_time:<span class="o">=</span>True
+</code></pre></div></p>
+<p>起動すると下記のような状態でまだ初期位置が与えられていない状態になっています。</p>
+<p><img alt="" src="../img/localization.png" /></p>
+<p>Rviz2のツールにある<mark>2DPopseEstimate</mark>で初期位置を与えてみましょう。
+<mark>2DPopseEstimate</mark>をクリックして、初期位置付近をクリック&amp;ドラッグで、位置と向きを指定します。</p>
+<p><img alt="" src="../img/localization.gif" /></p>
+<p>この時、<mark>2DPopseEstimate</mark>は<code>/initialposeトピック</code>を出力しています。</p>
+<p>なので、コマンドで<code>/initialposeトピック</code>を出力することでも初期位置を設定できます。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/initialpose<span class="w"> </span>geometry_msgs/msg/PoseWithCovarianceStamped<span class="w"> </span><span class="s2">&quot;{header: {stamp: {sec: 0}, frame_id: &#39;map&#39;}, pose: {pose: {position: {x: -2.0, y: -0.5, z: 0.0}, orientation: {w: 1.0}}}}&quot;</span><span class="w"> </span>-1<span class="w"> </span>
+</code></pre></div></p>
+<p>初期位置が設定されるとTFと赤い点でLaserScan、緑矢印で自己位置推定のパーティクルフィルタ(粒子フィルタ)の値が可視化されます。</p>
+<p>速度指令をパブリッシュして緑矢印の自己位置推定のパーティクルの動きを観察しましょう。</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># ジョイスティックがある場合</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>lecture_nav2_bringup<span class="w"> </span>joy_teleop_launch.py
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># キーボードで操作する場合</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>teleop_twist_keyboard
+</code></pre></div>
+ロボットの動きに合わせてパーティクルの位置が更新されていきます。</p>
+<p><img alt="" src="../img/localization2.gif" /></p>
+<hr />
+<h2 id="_3">シミュレータ上で自律走行を動かしてみる</h2>
+<p>自己位置推定ができたので、続けて自律走行を動かしまししょう。<br />
+<code>nav2_bringupパッケージ</code>の<code>navigation_launch.py</code>に<code>use_sim_time:=True</code>の引数を与えて起動します。  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># 自律走行の起動</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nav2_bringup<span class="w"> </span>navigation_launch.py<span class="w"> </span>use_sim_time:<span class="o">=</span>True
+</code></pre></div>
+<p>起動すると下記のような色の<mark>コストマップ</mark>と呼ばれるものが表示されます。</p>
+<p>コストマップは地図全体のコストを表し、大域的な経路計画に使用される<code>global_costmap</code>とロボット周辺のコストを表し、局所的な経路計画に使用される<code>local_costmap</code>の2種類あります。</p>
+<p>表示されているコストマップの色は、観測点(障害物)がピンク色で、その周囲に水色の衝突エリア(ロボットがその座標に行くと障害物に当たってしまう)、さらに、赤→紫→青→白の順に障害物との距離に応じて、コストが低くなるように表示されています。
+<img alt="" src="../img/navigation.png" /></p>
+<p>それでは、Rviz2のツールにある<mark>Nav2 Goal</mark>でゴール座標を与えて動かしてみましょう。</p>
+<p>動かし方は<mark>2DPopseEstimate</mark>と同様です。</p>
+<p><img alt="" src="../img/navigation.gif" /></p>
+<p>経路が計画され、経路に沿ってロボットが移動すれば成功です。</p>
+<p>また、ゴールを障害物上に設定した場合には、失敗します。</p>
+<p>他にも左下の<mark>Navigation2ツール</mark>を使用して、<mark>Waypoints Navigation</mark>や<mark>Path Through Navigation</mark>を行うことができます。</p>
+<p>Waypoints Navigation(順番にWaypointへ移動します)
+<img alt="" src="../img/waypoints_navigation.gif" /></p>
+<p>Path Through Navigation(Wapointを全て繋げた経路を生成して移動します)
+<img alt="" src="../img/paththrough_navigation.gif" /></p>
+<p>また、裏でGazeboが動いていますので、追加の障害物を置くことも可能です。</p>
+<p><img alt="" src="../img/obstacle_navigation.gif" /></p>
+<hr />
+<h2 id="slamexplore">シミュレータ上で地図作成(SLAM)中に自律走行(explore)を動かしてみる</h2>
+<p>また、自己位置推定中に自律走行が動かせたので、SLAM中にも自律走行が動かせます。(SLAMは自己位置推定中に地図作成しているので)</p>
+<p>一度全ての端末を終了して下記を実行してみましょう。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># turtlebot3シミュレーションをturtlebot3_worldで起動</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>turtlebot3_world.launch.py
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># Rviz2(navigation2の設定済み)を起動</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nav2_bringup<span class="w"> </span>rviz_launch.py
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># SLAMの起動(slam_toolboxパッケージ)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nav2_bringup<span class="w"> </span>slam_launch.py<span class="w"> </span>use_sim_time:<span class="o">=</span>True
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1"># 自律走行の起動</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>ros2<span class="w"> </span>launch<span class="w"> </span>nav2_bringup<span class="w"> </span>navigation_launch.py<span class="w"> </span>use_sim_time:<span class="o">=</span>True
+</code></pre></div>
+<p><img alt="" src="../img/explore_navigation.gif" /></p>
+<p>今回は<code>turtlebot3_world</code>を使用しましたが、他に用意されている<code>turtlebot3_house</code>を使用するともう少し広い空間で行うことができますし、自作Worldでも可能です。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># turtlebot3シミュレーションをturtlebot3_houseで起動</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span>turtlebot3_gazebo<span class="w"> </span>turtlebot3_house.launch.py
+</code></pre></div></p>
+<p><img alt="" src="../img/turtlebot3_house.png" /></p>
+<p>自律走行の簡易的な手順は、地図を作成して保存し、地図上で自己位置推定を行いながら自律走行ような手順になります。<br />
+以上でシミュレータ上で地図作成と自律走行を動かしてみるは終了です。 </p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy;2024 Tokyo Metropolitan University
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+    
+  </body>
+</html>

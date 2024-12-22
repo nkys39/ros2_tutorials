@@ -1,0 +1,2139 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../1_ROS2%E3%81%AE%E6%A6%82%E8%A6%81/">
+      
+      
+        <link rel="next" href="../3_ROS2%E3%81%AElaunch%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>2.ROS2の基礎とROS2コマンド - ROS2 Tutorials</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ros2ros2" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="ROS2 Tutorials" class="md-header__button md-logo" aria-label="ROS2 Tutorials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ROS2 Tutorials
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2.ROS2の基礎とROS2コマンド
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ROS2 Tutorials" class="md-nav__button md-logo" aria-label="ROS2 Tutorials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ROS2 Tutorials
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【環境構築】
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            【環境構築】
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Ubuntu22.04%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28ROS2%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.Ubuntu22.04でのROS2Humble環境構築(ROS2デフォルト)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Ubuntu22.04%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.Ubuntu22.04でのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/Windows11%28WSL2%29%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.Windows11(WSL2)でのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter0/MacOS%E3%81%A7%E3%81%AEROS2Humble%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%28pixi%E3%81%AB%E3%82%88%E3%82%8B%E7%B0%A1%E7%95%A5%E7%89%88%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.MacOSでのROS2Humble環境構築(pixiによる簡略版)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【Navigation2体験】navigation2を用いた地図構築(SLAM)と自律走行の使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            【Navigation2体験】navigation2を用いた地図構築(SLAM)と自律走行の使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E4%B8%8A%E3%81%A7%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%E3%81%A8%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%E3%82%92%E5%8B%95%E3%81%8B%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.シミュレータ上で地図作成と自律走行を動かしてみる
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%28SLAM%29%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.地図作成(SLAM)の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E8%87%AA%E5%B7%B1%E4%BD%8D%E7%BD%AE%E6%8E%A8%E5%AE%9A%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.自己位置推定の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%28navigation2%29%E3%81%AE%E5%85%A5%E5%87%BA%E5%8A%9B%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.自律走行(navigation2)の入出力について
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_ROS2の基礎】ロボット用ミドルウェアROS2の概要とROS2コマンドの使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_ROS2の基礎】ロボット用ミドルウェアROS2の概要とROS2コマンドの使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_ROS2%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.ROS2の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    2.ROS2の基礎とROS2コマンド
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    2.ROS2の基礎とROS2コマンド
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-ros1ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. ROS1/ROS2の動作原理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. ROS1/ROS2の動作原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ddsdata-distribution-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      DDS(Data Distribution Service)について
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ros2turtlesim" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. ROS2を動かしてみる(turtlesim)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. ROS2を動かしてみる(turtlesim)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ノードの起動方法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turtlesim_node" class="md-nav__link">
+    <span class="md-ellipsis">
+      turtlesim_nodeの起動
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turtle_teleop_key" class="md-nav__link">
+    <span class="md-ellipsis">
+      turtle_teleop_keyの起動
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      ノードの起動確認方法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. ROS2の通信方式(メッセージ通信)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. ROS2の通信方式(メッセージ通信)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      メッセージ通信の種類
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      トピック通信
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      サービス通信
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      アクション通信
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      パラメータ通信
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. ROS2コマンドでトピック通信を調べる
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. ROS2コマンドでトピック通信を調べる">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS2での単位系
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ros2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS2の座標系
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. ROS2コマンドでサービス通信を調べる
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. ROS2コマンドでアクション通信を調べる
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. ROS2コマンドでパラメータを調べる
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 自分でノード間通信(メッセージ通信)を繋げてみる
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 自分でノード間通信(メッセージ通信)を繋げてみる">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      よく使われる速度指令の配信方法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros2ros2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS2の基礎とROS2コマンドのまとめ
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_ROS2%E3%81%AElaunch%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.ROS2のlaunchシステム
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_ROS2のツール】シミュレータ(Gazebo)とROS2関連ツールの使い方
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_ROS2のツール】シミュレータ(Gazebo)とROS2関連ツールの使い方
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/1_gazebo%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.シミュレータGazeboについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/2_rqt%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.ROS2のGUIツールrqtについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/3_rviz%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3D可視化ツールRvizについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/4_tf%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.座標管理ライブラリTFについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/5_ros2bag%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.データ保存/再生ツールros2bagについて
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【補足資料_Navigation2】自律走行の概要とnavigation2の構成
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            【補足資料_Navigation2】自律走行の概要とnavigation2の構成
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    目次
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/%E8%87%AA%E5%BE%8B%E8%B5%B0%E8%A1%8C%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. 自律走行の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/%E5%9C%B0%E5%9B%B3%E4%BD%9C%E6%88%90%28SLAM%29%E3%81%AE%E8%AA%AC%E6%98%8E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. 地図作成(SLAM)の説明
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter5/Navigation2%E3%81%AE%E6%A6%82%E8%A6%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Navigation2の概要
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-ros1ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. ROS1/ROS2の動作原理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. ROS1/ROS2の動作原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ddsdata-distribution-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      DDS(Data Distribution Service)について
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ros2turtlesim" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. ROS2を動かしてみる(turtlesim)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. ROS2を動かしてみる(turtlesim)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ノードの起動方法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turtlesim_node" class="md-nav__link">
+    <span class="md-ellipsis">
+      turtlesim_nodeの起動
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turtle_teleop_key" class="md-nav__link">
+    <span class="md-ellipsis">
+      turtle_teleop_keyの起動
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      ノードの起動確認方法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. ROS2の通信方式(メッセージ通信)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. ROS2の通信方式(メッセージ通信)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      メッセージ通信の種類
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      トピック通信
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      サービス通信
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      アクション通信
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      パラメータ通信
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. ROS2コマンドでトピック通信を調べる
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. ROS2コマンドでトピック通信を調べる">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS2での単位系
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ros2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS2の座標系
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. ROS2コマンドでサービス通信を調べる
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. ROS2コマンドでアクション通信を調べる
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-ros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. ROS2コマンドでパラメータを調べる
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 自分でノード間通信(メッセージ通信)を繋げてみる
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 自分でノード間通信(メッセージ通信)を繋げてみる">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      よく使われる速度指令の配信方法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros2ros2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS2の基礎とROS2コマンドのまとめ
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="ros2ros2">ROS2の基礎とROS2コマンド</h1>
+<p>ROS2のチュートリアルとして使われているturtlesimパッケージを動かしながらROS2の基礎を学びましょう。</p>
+<hr />
+<h2 id="1-ros1ros2">1. ROS1/ROS2の動作原理</h2>
+<p><img alt="画像15.png" src="../img/2/image1.png" /></p>
+<p>ROS1/ROS2は、<mark>ノードと呼ばれる1つの機能を持つ実行可能な1個のプログラム</mark>を複数つなげていくことで動作します。<br />
+ノードはROS1/ROS2における最小プロセスで、<mark>パッケージと呼ばれるROS1/ROS2ソフトウェアの基本単位</mark>で管理されます。<br />
+各ノードは起動後、接続条件に合うノードを探索し、接続します。<br />
+接続したノード間ではメッセージ通信と呼ばれるデータの送受信が開始されます。(メッセージ通信の説明は後述します。)  </p>
+<table>
+<thead>
+<tr>
+<th>ROS2用語名称</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>マスタ</td>
+<td>(<mark>ROS2で廃止</mark>)ノードを接続するネームサーバーの役割(<mark>必須、ただし複数PC内で1個</mark>)</td>
+</tr>
+<tr>
+<td>デーモン</td>
+<td>(<mark>ROS2で新規</mark>)ノードを高速に発見するためのネームサーバーの役割(<mark>無しでも動作</mark>)</td>
+</tr>
+<tr>
+<td>ノード</td>
+<td>機能や目的で細分化したROS2の最小プロセス(<mark>実行可能な1個のプログラム</mark>)</td>
+</tr>
+<tr>
+<td>パッケージ</td>
+<td><mark>ROS1/ROS2ソフトウェアの基本単位</mark>(パッケージ内にノードを配置する)</td>
+</tr>
+<tr>
+<td>メタパッケージ</td>
+<td>共通の目的を持つ<mark>パッケージの集合体</mark>(例:navigation2など)</td>
+</tr>
+<tr>
+<td>メッセージ通信</td>
+<td>ノード間でデータの送受信を行う仕組み</td>
+</tr>
+</tbody>
+</table>
+<p>ROS2では<mark>中央集権的にノード間の通信接続を行っていたマスタにあたるroscoreが廃止</mark>され、<mark>各々のノードが他ノードを分散発見する形式</mark>に変更されました。<br />
+これにより、単一障害点がなくなり、ROS2ネットワーク上の障害で一度に不具合を起こしてしまう心配がなくなりました。  </p>
+<p>しかし、大規模なロボットシステムになると分散発見を行う場合、全てのノードを発見するまで時間がかかってしまいます。<br />
+この問題を解決するために、ROS2ではデーモンと呼ばれる、参照することで高速にノードを発見できるものをバックグラウンドで起動しておけます。<br />
+ROS2ノードの挙動としては、デーモンが存在すれば参照して高速発見、なければ分散発見を行います。  </p>
+<p><strong>ROS1ではマスタがノード間を繋ぐ役割を行っていたが、<mark>マスタに不具合が出ると全ノードに不具合が出てしまうため廃止されました。</mark></strong></p>
+<p><strong><mark>ROS2ではDDSによって各ノードが接続相手を探して繋がるようになりました。(分散発見)</mark></strong></p>
+<p>デーモンは<code>ros2 node list</code>や<code>ros2 topic list</code>などのROS2ネットワーク上を探索する際に自動起動されます </p>
+<hr />
+<h3 id="ddsdata-distribution-service">DDS(Data Distribution Service)について</h3>
+<ul>
+<li>DDSはOMG(object Management Group)で策定された通信仕様でPub/Sub通信とよく似たデータ転送機能を提供します。</li>
+<li>OMGによって策定されたIDL(Interface Description Language)を用いて、メッセージを定義し、シリアライズします。</li>
+<li>DDSではPub/Sub通信に必要となる送信元、受信先の発見メカニズムは、分散化されており、システムは単一障害点がなくなり、自由度が高くなります。</li>
+<li>DDSはデフォルトでUDPを使用しますが、Quality of Service (QoS) と呼ばれるパラメータを使って通信の信頼性を制御でき、TCPのような通信調整も可能です。</li>
+<li>DDSは、金融・宇宙・航空・電車などの大規模システムで採用されており、信頼性が高い。</li>
+</ul>
+<p>ROS2で使用できるDDSの種類としては下記のものがあります。</p>
+<ul>
+<li>FastRTPS(eProsima): Tier1</li>
+<li>CycloneDDS(Eclipse): Tier1</li>
+<li>ConnextDDS(RTI): Tier1</li>
+<li>GurumDDS(GurumNetworks): Tier3</li>
+</ul>
+<p>ROS2HumbleでのデフォルトはFastRTPSです。  </p>
+<p>また、近年ではZenoh(Zero network overhead protocol)と呼ばれるDDSを用いない新しいPub/Sub方式の通信ライブラリにも入れ替えられるようになってきています。<br />
+特徴としては、ネットワーク内ではDDSライク、ネットワーク間ではMQTTライクに動作し、インターネット越し通信が簡単にできる点です。<br />
+<a href="https://speakerdeck.com/takasehideki/rosconjp-20240925">詳しくはこちらを参照してください</a>  </p>
+<div class="admonition navigation2実行に際してのfastrtpsの不具合">
+<p class="admonition-title">Navigation2実行に際してのfastrtpsの不具合</p>
+<p>しかし、下記で議論されているように、現在Navigation2(Nav2)との不具合が発生しているため、講習会ではパラメータ変更したCycloneDDSを使用しております。 </p>
+<p><a href="https://github.com/ros-planning/navigation2/issues/3014">Navigation2 Issues #3014</a></p>
+<p>ただし、この設定変更は全てのROS2プログラムに最適なものではありません。現在確認している事象は下記になります。  </p>
+<ul>
+<li>FastRTPSをNav2で使用するとlocal costmapが生成されないことが良く起こり、この状態だと障害物回避ができずに衝突してしまう</li>
+<li>Nav2に関してはCycloneDDSに変更すると不具合なく動作する。</li>
+<li>講習会環境(Intel NUC8i5)でのCPU使用率は、Nav2のComposition実行ではFastRTPSは45%、CycloneDDSは気持ち高い程度でほぼ同等</li>
+<li>depthai-rosパッケージ(OAK-Dカメラ)などの画像伝送で使用しているComposition実行はCycloneDDSは100%超え、FastRTPSは40%程度で、FastRTPSが良い</li>
+</ul>
+<p>よってHumbleの場合はデフォルトをCycloneDDSに変更し、画像処理や点群処理で重いところをComponent化して、実行時にFastRTPSにするのが現状の最適解だと考えています。<br />
+また、このようにパフォーマンスを調整可能な部分はROS1にはなかったものになります。</p>
+<p>DDSの入れ替えと調整は下記が参考になります。</p>
+<ul>
+<li><a href="https://docs.ros.org/en/humble/Installation/DDS-Implementations.html">DDS-Implementations</a></li>
+<li><a href="https://docs.ros.org/en/foxy/How-To-Guides/DDS-tuning.html">DDS-tuning</a></li>
+</ul>
+<p>DDSの日本語参考サイト</p>
+<ul>
+<li><a href="https://www.youtalk.jp/2017/05/28/dds.html">DDS (Data Distribution Service) とは</a></li>
+<li><a href="https://speakerdeck.com/takasehideki/ketukiyokurostutenannafalseka-iotde-niqi-ninaruddstong-xin-ji-neng-woche-di-jie-pou-suru?slide=24">けっきょくROSってなんなのか？ 〜IoT的に気になるDDS通信機能を徹底解剖する〜</a></li>
+<li><a href="https://zenn.dev/hakuturu583/articles/ros2_turtorial">駆け抜けるROS2</a></li>
+</ul>
+<p>DDS関連論文</p>
+<ul>
+<li><a href="https://arxiv.org/abs/2101.02074">Latency Analysis of ROS2 Multi-Node Systems</a></li>
+<li><a href="https://arxiv.org/abs/2208.14269">AuthROS: Secure Data Sharing Among Robot Operating Systems Based on Ethereum</a></li>
+<li><a href="https://ipsj.ixsq.nii.ac.jp/ej/?action=repository_uri&amp;item_id=186376&amp;file_id=1&amp;file_no=1">ROS2における通信特性に応じたDDS実装の動的選択機構の実現</a></li>
+<li><a href="https://ipsj.ixsq.nii.ac.jp/ej/?action=pages_view_main&amp;active_action=repository_view_main_item_detail&amp;item_id=190319&amp;item_no=1&amp;page_id=13&amp;block_id=8">ROS2と軽量DDSの組込みシステムに対する適用性評価</a></li>
+<li><a href="https://jglobal.jst.go.jp/detail?JGLOBAL_ID=202002240535367632">ロボティクスミドルウェアROS,ROS2,Ignition,Isaacの機能比較と通信評価</a>
+⇒オープンアクセスではない、上記の【駆け抜けるROS2】内に抜粋説明がある。</li>
+</ul>
+</div>
+<hr />
+<h2 id="2-ros2turtlesim">2. ROS2を動かしてみる(turtlesim)</h2>
+<h3 id="_1">ノードの起動方法</h3>
+<p>さて動作原理について説明しましたが、実際にROS2動かしながらROS2の基礎を学んでいきます。 <br />
+ROS2のチュートリアルで使われている<code>turtlesimパッケージ</code>内の<code>turtlesim_nodeノード</code>と<code>turtle_teleop_keyノード</code>を起動しながらROS2の使い方を説明します。  <br />
+まずROS2に関する操作はコマンドライン(端末)上で<mark>ROS2コマンド</mark>と呼ばれるもので行います。<br />
+ROS2コマンドの種類については各コマンドで<mark>-hオプション</mark>を参照してください。</p>
+<p>ノードを起動する方法は以下の2種類のROS2コマンドがあります。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>①<span class="w"> </span>ros2<span class="w"> </span>run<span class="w"> </span>コマンド
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>②<span class="w"> </span>ros2<span class="w"> </span>launch<span class="w"> </span>コマンド
+</code></pre></div>
+①は1個のノードを起動し、②は複数のノードを起動します。</p>
+<p>①の使い方は以下のように、起動したいノードの<mark>パッケージ名</mark>と<mark>ノード名</mark>が必要になります。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ros2<span class="w"> </span>run<span class="w"> </span><span class="o">[</span>パッケージ名<span class="o">]</span><span class="w"> </span><span class="o">[</span>ノード名<span class="o">]</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># 詳細についてはros2 run -h で確認できます。</span>
+</code></pre></div>
+②の使い方は以下のように、<mark>launchファイルが必要</mark>になります。launchファイルの書き方については後述します。
+また、パッケージ内にlaunchファイルを配置することでlaunchファイルを探しやすくなります(通常はこの方法)。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span><span class="o">[</span>launchファイル名<span class="o">(</span>相対or絶対パス<span class="o">)]</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>ros2<span class="w"> </span>launch<span class="w"> </span><span class="o">[</span>パッケージ名<span class="o">]</span><span class="w"> </span><span class="o">[</span>launchファイル名<span class="o">]</span>
+</code></pre></div>
+<strong><mark>ROS2ノードの起動にはパッケージ名とノード名が必要</mark></strong></p>
+<p><strong><mark>launch起動にはlaunchファイルが必要</mark></strong></p>
+<hr />
+<h3 id="turtlesim_node">turtlesim_nodeの起動</h3>
+<p><code>turtlesimパッケージ</code>に含まれている、<code>turtlesim_nodeノード</code>は、速度指令値を購読して動く亀を作り出す2Dシミュレータです。<br />
+<code>turtlesim_nodeノード</code>を起動するため、端末を開き(Ctrlキー+Altキー+T)、以下のコマンドを入力します。  </p>
+<p><mark>コマンドを入力する際はTabキー補完を使用しましょう(使い慣れていない方は特に使用すること)。</mark>  <br />
+例えば、"ros2 run tu"のところでTabキーを押すことで"ros2 run turtlesim"まで自動で入力されます。<br />
+補完候補が複数ある場合は、入力されず、もう一度Tabキーを押すことで候補が表示されます。<br />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlesim<span class="w"> </span>turtlesim_node
+</code></pre></div>
+<img alt="cmd_turtlesim_node.png" src="../img/2/cmd_turtlesim_node.png" /></p>
+<p>コマンドを入力し、以下のように出れば成功です。</p>
+<p><img alt="cmd_turtlesim_node2.png" src="../img/2/cmd_turtlesim_node2.png" /></p>
+<p>コマンドを入力すると以下のような画面が出てきます。</p>
+<p><img alt="turtlesim_node.png" src="../img/2/turtlesim_node.png" /></p>
+<p>続いて亀を動かすための速度指令値をキーボード入力から出力する<code>turtle_teleop_keyノード</code>を起動します。</p>
+<hr />
+<h3 id="turtle_teleop_key">turtle_teleop_keyの起動</h3>
+<p><code>turtlesimパッケージ</code>に含まれている、<code>turtle_teleop_keyノード</code>は、キーボード入力から速度指令値を配信します。</p>
+<p><code>turtle_teleop_keyノード</code>を起動するため、端末を開き(Ctrlキー+Altキー+T)、以下のコマンドを入力します。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlesim<span class="w"> </span>turtle_teleop_key
+</code></pre></div>
+<img alt="cmd_turtle_teleop_key.png" src="../img/2/cmd_turtle_teleop_key.png" /></p>
+<p>コマンドを入力し以下のように出れば成功です。</p>
+<p>キーボード入力は、実行中の端末が選択されている状態で、<br />
+矢印キー(↑↓→←)で入力し、↑↓キーで前後に進み、→←でその場で回転します。<br />
+Qキーを押すことでノードが終了します。<br />
+また、起動後端末上に記載されている通り、G|B|V|C|D|E|R|Tキーを押すことで、Fキーを中心とした角度方向に亀が回転します。<br />
+回転中にFキーを押すことで途中でキャンセルができます。  </p>
+<p><img alt="cmd_turtle_teleop_key2.png" src="../img/2/cmd_turtle_teleop_key2.png" /></p>
+<p>キーボード入力を行うと以下のように亀が動き、軌跡が描画されます。</p>
+<p><img alt="turtlesim_node2.png" src="../img/2/turtlesim_node2.png" /></p>
+<hr />
+<h3 id="_2">ノードの起動確認方法</h3>
+<p>ノードが起動したかどうかを確認する方法として、以下の2種類があります。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>① ros2 node list
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>② rqt_graph 
+</code></pre></div>
+①はコマンドライン上(CLI)で起動しているノードの情報を表示し、②はノードの接続関係を絵として可視化(GUI)します。</p>
+<p>①の使い方は以下のように、listで起動しているノードの名前一覧を表示できます。<br />
+起動しているノードの数が多くなってくると起動しているのにlistで表示されないことがあります。<br />
+その場合は面倒ですが--no-daemonオプションをつけることをオススメします。<br />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ros2<span class="w"> </span>node<span class="w"> </span>list
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ros2<span class="w"> </span>node<span class="w"> </span>list<span class="w"> </span>--no-daemon<span class="w"> </span><span class="c1">#(推奨)</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1">#コマンドの詳細については、ros2 node -h で確認できます。</span>
+</code></pre></div>
+②使い方は、以下のようにコマンドを入力するだけでGUIが立ち上がります。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>rqt_graph
+</code></pre></div>
+以下のようなGUIが立ち上がり、左上の更新ボタン(青矢印)を押すことで<mark>楕円がノード、長方形がトピック</mark>を表します。</p>
+<p><img alt="rqt_graph.png" src="../img/2/rqt_graph.png" /></p>
+<p>ノード数が少ない場合には便利ですが、自律走行のようにノード数が増えると見づらくなります。</p>
+<hr />
+<h2 id="3-ros2">3. ROS2の通信方式(メッセージ通信)</h2>
+<p>ROS2で<code>turtlesim</code>を動かしました。<code>turtlesim_nodeノード</code>は<code>turtle_teleop_keyノード</code>から速度指令値を受け取り動作していました。
+この通信方式はメッセージ通信と呼ばれ、トピック・サービス・アクション・パラメータの4種類があります。</p>
+<hr />
+<h3 id="_3">メッセージ通信の種類</h3>
+<p><img alt="画像16.png" src="../img/2/image2.png" /></p>
+<table>
+<thead>
+<tr>
+<th>ROS2用語名称</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>トピック</td>
+<td>センサ等の連続的なデータ通信が必要な時に使用する通信(単方向非同期通信)</td>
+</tr>
+<tr>
+<td>サービス</td>
+<td>状態確認等の要請後に即時応答が必要な時に使用する通信(双方向同期通信)</td>
+</tr>
+<tr>
+<td>アクション</td>
+<td>目標地点への移動指令など、要請後の応答に時間がかかる処理を呼び出す場合や処理中の中間結果が必要な時に使用する通信(双方向非同期通信)</td>
+</tr>
+<tr>
+<td>パラメータ</td>
+<td>移動速度の最大値など、ノードのパラメータ変更時に使用される通信</td>
+</tr>
+</tbody>
+</table>
+<p><code>turtlesim</code>での通信方式は<mark>矢印入力がトピック通信、ローマ字入力がアクション通信</mark>になります。</p>
+<hr />
+<h3 id="_4">トピック通信</h3>
+<p><img alt="画像17.png" src="../img/2/image3.png" /></p>
+<p>トピック通信は、送受信するデータの経路を<mark>トピック</mark>、データを<mark>メッセージ</mark>と呼び、</p>
+<ul>
+<li>データ(メッセージ)を送信する<mark>パブリッシャ(Publisher)(配信者)</mark></li>
+<li>データ(メッセージ)を受信する<mark>サブスクライバ(Subscriber)(購読者)</mark></li>
+</ul>
+<p>の2つから構成されます。</p>
+<ul>
+<li>
+<p>トピックは名前で管理され、任意の名前をつけることができます。またメッセージはデータ型を持ち、整数・小数・文字列・Bool等の基本的な型や、よく使う組み合わせ型(構造体)があらかじめ用意されています。使いたいデータ型がない場合は独自でデータ型を定義することも可能です。</p>
+</li>
+<li>
+<p>トピック通信を行うには、<mark>同じトピック名・メッセージ型であれば自動的に接続</mark>され、データ通信が行われます。</p>
+</li>
+<li>処理の流れとしては、パブリッシャがトピックをパブリッシュすると、サブスクライバ側でコールバック関数が呼び出され、トピックが取得できます。</li>
+<li>
+<p>一度接続されると、それ以降は連続してデータ通信が行われるため、センサデータの取得などに利用されます。</p>
+</li>
+<li>
+<p>1:1の通信以外にも、1:多、多:1、多:多の通信が可能です。</p>
+</li>
+<li>
+<p>トピック名とメッセージ型が同じであれば、実装言語やOSが異なっていても通信が可能です。  </p>
+</li>
+<li>また、1つのノードに複数のパブリッシャとサブスクライバを用いることができます。</li>
+</ul>
+<p>用意されているメッセージ型の一覧を確認する場合は<code>interfaceコマンド</code>で確認できます。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># 下記の2つは同様にメッセージ型の名前一覧を表示するコマンド</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ros2<span class="w"> </span>interface<span class="w"> </span>list<span class="w"> </span>-m
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>ros2<span class="w"> </span>interface<span class="w"> </span>list<span class="w"> </span>--only-msgs
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># メッセージ型の詳細を確認するコマンド</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span><span class="o">[</span>メッセージ型の名前<span class="o">]</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span>std_msgs/msg/String
+</code></pre></div></p>
+<p><strong>トピック通信は、パブリッシャからサブスクライバへの単方向非同期通信</strong>  </p>
+<p><strong>トピック通信を行うには、<mark>トピック名とメッセージ型を同じにする必要がある</mark></strong></p>
+<hr />
+<h3 id="_5">サービス通信</h3>
+<p><img alt="画像18.png" src="../img/2/image4.png" /></p>
+<ul>
+<li>
+<p>サービス通信はサービスサーバとサービスクライアントの2つから構成されます。</p>
+</li>
+<li>
+<p><strong>サービス通信は、クライアントから要請(リクエスト)を送り、サーバが応答(レスポンス)を返す双方向同期通信です</strong>(<mark>他のノードにある関数を呼び出し、戻り値を受け取るような挙動</mark>)。</p>
+</li>
+<li>
+<p>サービス通信もトピック通信と同様に名前とデータ型で管理されています。  </p>
+</li>
+<li>
+<p>サービス通信のデータ型(サービス型)も少ないですが予め用意されているものがあります。使いたいデータ型がない場合は独自でデータ型を定義することも可能です。</p>
+</li>
+<li>
+<p>処理の流れとしては、クライアントがリクエストすると、サーバー側でコールバック関数が呼び出され、リクエスト値が取得できます。その後サーバー側処理を行いレスポンスを返すと、クライアント側でレスポンス値が取得できます。</p>
+</li>
+<li>
+<p>サービス通信は主に、特定の状況で1度のみ実行し即時に結果が得られる場合に用います。具体的には、ロボットの現在のステータスを確認や保存する場合などの際に使用されます</p>
+</li>
+<li>
+<p>トピック通信との違いは、1対1の通信であることと応答(レスポンス)が帰ってくることです。この応答により、要請(リクエスト)の成否などが分かるため、クライアント側のエラー処理などが実装しやすくなります。</p>
+</li>
+<li>
+<p>また、サービスを早い周期で何度も呼び出すとエラーになることがあります。そのような処理がしたい場合にはトピック通信を２つ用いることで代用することもできます。  </p>
+</li>
+</ul>
+<p>用意されているサービス型の一覧を確認する場合はinterfaceコマンドで確認できます。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># 下記の2つは同様にサービス型の名前一覧を表示するコマンド</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>ros2<span class="w"> </span>interface<span class="w"> </span>list<span class="w"> </span>-s
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>ros2<span class="w"> </span>interface<span class="w"> </span>list<span class="w"> </span>--only-srvs
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># サービス型の詳細を確認するコマンド</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span><span class="o">[</span>サービス型の名前<span class="o">]</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span>std_srvs/srv/Empty
+</code></pre></div></p>
+<p><strong>サービス通信は、クライアントからリクエストを送り、サーバがレスポンスを返す双方向同期通信</strong>  </p>
+<p><strong>サービス通信を行うには、<mark>サービス名とサービス型を同じにする必要がある</mark></strong></p>
+<hr />
+<h3 id="_6">アクション通信</h3>
+<p><img alt="画像19.png" src="../img/2/image5.png" /></p>
+<ul>
+<li>アクション通信は、アクションサーバとアクションクライアントの2つから構成されます。  </li>
+<li>アクション通信は、クライアントから要請(リクエスト)を送り、サーバがフィードバックと呼ばれる処理中の中間結果を一時的なトピック通信で返し、処理が完了すると結果(リザルト)として返す双方向非同期通信です。  </li>
+<li>これは、サービス通信とトピック通信を組み合わせた通信方式になっています。</li>
+<li>
+<p><mark>この通信特徴は中間結果が得られることと、途中でキャンセルが可能なことです。</mark></p>
+</li>
+<li>
+<p>アクション通信も他の通信方式と同様に名前とデータ型で管理されています。  </p>
+</li>
+<li>
+<p>アクション通信のデータ型は予め用意されているものはないため、基本的に独自定義することになります。</p>
+</li>
+<li>
+<p>アクション通信は主に要請後の応答に時間がかかる場合や処理中の中間結果が必要な場合に使用されます。  具体的には、自律走行時の目的地を指定し、到達するまでの中間結果を返し、最終的に目的地に到達したかを結果として返すような使われ方をします。</p>
+</li>
+</ul>
+<p>用意されているアクション型の一覧はinterfaceコマンドで確認できます。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># 下記の2つは同様にアクション型の名前一覧を表示するコマンド</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>ros2<span class="w"> </span>interface<span class="w"> </span>list<span class="w"> </span>-a
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>ros2<span class="w"> </span>interface<span class="w"> </span>list<span class="w"> </span>--only-actions
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># アクション型の詳細を確認するコマンド</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span><span class="o">[</span>アクション型の名前<span class="o">]</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span>turtlesim/action/RotateAbsolute
+</code></pre></div></p>
+<p><strong>アクション通信は、クライアントからリクエストを送り、サーバが処理中の中間結果をフィードバックで返し、完了すると結果(リザルト)を返す双方向非同期通信(途中でキャンセル処理が可能)</strong>  </p>
+<p><strong>アクション通信を行うには、<mark>アクション名とアクション型を同じにする必要がある</mark></strong></p>
+<hr />
+<h3 id="_7">パラメータ通信</h3>
+<ul>
+<li>パラメータは、<mark>各ノードが持つ構成値</mark>です。  </li>
+<li><mark>ノード起動時に変更が可能で、ソースコードを変更することなく実行時解決ができます。</mark>  </li>
+<li>ノード内での実装方法によりますが、<mark>実行中に変更することも可能</mark>です。  </li>
+<li>パラメータには整数・小数・文字列・Bool・リスト等の基本的な値を設定することができます。  </li>
+<li>ROS2では各ノードが独自でパラメータを管理しています。なのでROS1の時に、すべてのノードから参照できるグローバルパラメータのような使い方はできなくなりました。  </li>
+<li>もし、どうしてもグローバルパラメータを使用したいときには、<code>demo_nodes_cppパッケージ</code>の<code>parameter_blackboardノード</code>を使用することで実現できます。</li>
+<li><mark>ROS2のパラメータはサービス通信のような実装になっており、クライアントから要請されると、パラメータサーバ内のコールバック関数が呼ばれ、処理されます。</mark></li>
+</ul>
+<p>現在起動しているノードのパラメータを一覧はparamコマンドで確認できます。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># 全ノードのパラメータ名を一覧で確認</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>ros2<span class="w"> </span>param<span class="w"> </span>list
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1"># ノードのパラメータ値を取得する</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>ros2<span class="w"> </span>param<span class="w"> </span>get<span class="w"> </span><span class="o">[</span>ノード名<span class="o">]</span><span class="w"> </span><span class="o">[</span>パラメータ名<span class="o">]</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1"># ノードのパラメータ値を変更する</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>ros2<span class="w"> </span>param<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="o">[</span>ノード名<span class="o">]</span><span class="w"> </span><span class="o">[</span>パラメータ名<span class="o">]</span>
+</code></pre></div>
+<strong>パラメータは、ノードが持つ構成値で、ソースコードを変更せずに起動時や実行時に変更ができる</strong></p>
+<p><strong>ROS2のパラメータはサービス通信のような実装になっており、クライアントから要請されると、パラメータサーバ内のコールバック関数が呼ばれ、処理される</strong></p>
+<hr />
+<h2 id="4-ros2">4. ROS2コマンドでトピック通信を調べる</h2>
+<p><img alt="画像20.png" src="../img/2/image6.png" /></p>
+<p>準備として、<code>turtlesim_nodeノード</code>と<code>turtle_teleop_keyノード</code>の2つが立ち上がっている状態を用意します。<br />
+過去に起動していた端末を全て落とします。(Ctrl+dの端末終了のショートカットキーが便利です)<br />
+その後2つのノードを起動します<br />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># turtlesim_nodeノードの起動</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlesim<span class="w"> </span>turtlesim_node
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># turtle_teleop_keyノードの起動</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlesim<span class="w"> </span>turtle_teleop_key
+</code></pre></div></p>
+<p>以下のROS2コマンドを用いてノードとトピックの情報を調べ、<code>turtlesim_nodeノード</code>と<code>turtle_teleop_keyノード</code>の2つノード間で流れているトピック名とメッセージ型を調べる</p>
+<p>①実行中のノードをリスト表示する
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ros2<span class="w"> </span>node<span class="w"> </span>list
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1"># デーモンを使わずに探索</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>ros2<span class="w"> </span>node<span class="w"> </span>list<span class="w"> </span>--no-daemon
+</code></pre></div>
+②ノード情報を表示する
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># ros2 node info [ノード名]</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ros2<span class="w"> </span>node<span class="w"> </span>info<span class="w"> </span>/turtlesim
+</code></pre></div>
+③トピックのリストを表示する
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>list
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1"># メッセージ型名も表示</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>ros2<span class="w"> </span>topic<span class="w"> </span>list<span class="w"> </span>-t
+</code></pre></div>
+④トピックのメッセージ型名を表示する
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># ros2 topic info [トピック名]</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="c1"># ros2 topic type [トピック名]</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">type</span><span class="w"> </span>/turtle1/cmd_vel
+</code></pre></div>
+⑤メッセージ型のデータ構造を表示
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># ros2 interface show [メッセージ型名]</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span>geometry_msgs/msg/Twist
+</code></pre></div></p>
+<p>①～⑤までで、トピック名(<code>/turtle1/cmd_vel</code>)とメッセージ型(<code>geometry_msgs/msg/Twist</code>)の名前とデータ構造が調べられました。<br />
+⑥では実際に流れているトピックを確認し、⑦ではコマンドラインからトピックを配信してturtlesim_nodeの挙動を確認してみましょう。  </p>
+<p>⑥配信されているトピックのデータを確認する
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># ros2 topic echo [トピック名]</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/turtle1/cmd_vel
+</code></pre></div>
+⑦トピックを配信してみる
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># ros2 topic pub [トピック名] [メッセージ型名] [出力値]</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/turtle1/cmd_vel<span class="w"> </span>geometry_msgs/msg/Twist<span class="w"> </span><span class="s2">&quot;{linear: {x: 0.0,y: 0.0,z: 0.0},angular: {x: 0.0,y: 0.0,z: 1.0}}&quot;</span>
+</code></pre></div></p>
+<hr />
+<h3 id="ros2">ROS2での単位系</h3>
+<p>速度指令トピックの情報は見えましたが、単位がありません。これはROS2内で単位系が規定されているためです。  </p>
+<ul>
+<li>ROS2ではSI単位系が基本です。</li>
+<li>オープンソースなどの他のノードと接続させることを考えると、自作ノード内でもSI単位系に統一しておくと良いです。</li>
+<li>パッケージによっては出力単位がSI単位系でない場合もあるので初めて使用するノードは確認した方が良いです。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>量</th>
+<th>単位(名称)</th>
+<th>単位(記号)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>長さ</td>
+<td>メートル</td>
+<td>m</td>
+</tr>
+<tr>
+<td>質量</td>
+<td>キログラム</td>
+<td>kg</td>
+</tr>
+<tr>
+<td>時間</td>
+<td>秒</td>
+<td>s</td>
+</tr>
+<tr>
+<td>電流</td>
+<td>A</td>
+<td>アンペア</td>
+</tr>
+<tr>
+<td>角度</td>
+<td>ラジアン</td>
+<td>rad</td>
+</tr>
+<tr>
+<td>速度</td>
+<td>メートル毎秒</td>
+<td>m/s</td>
+</tr>
+<tr>
+<td>角速度</td>
+<td>ラジアン毎秒</td>
+<td>rad/s</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="ros2_1">ROS2の座標系</h3>
+<ul>
+<li>右手座標系を使用する</li>
+<li>軸の方向<br />
+    X軸：正面<br />
+    Y軸：左向き<br />
+    Z軸：上向き  </li>
+<li>回転方向<br />
+    右手方向が正</li>
+</ul>
+<p><img alt="画像21.png" src="../img/2/image7.png" /></p>
+<hr />
+<h2 id="5-ros2">5. ROS2コマンドでサービス通信を調べる</h2>
+<p><code>turtlesim_node</code>には新しいカメを生み出すサービス通信<code>/spawn</code>がある。これを使いサービス通信の使い方を学ぼう。<br />
+以下のROS2コマンドを用いてノードのサービス情報を調べ、サービス名とサービス型を調べます  </p>
+<p>①②は2-4と同様のため省略<br />
+③サービスのリストを表示する
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>list
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1"># サービス型名も表示</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>ros2<span class="w"> </span>service<span class="w"> </span>list<span class="w"> </span>-t
+</code></pre></div>
+④サービスのサービス型名を表示する
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># ros2 service type [サービス名] </span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>ros2<span class="w"> </span>service<span class="w"> </span><span class="nb">type</span><span class="w"> </span>/spawn
+</code></pre></div>
+⑤サービス型のデータ構造を表示する
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># ros2 interface show [サービス型名]</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span>turtlesim/srv/Spawn
+</code></pre></div>
+⑥サービス要請を行ってみる
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># ros2 service call [サービス名] [サービス型名] [リクエスト値]</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/spawn<span class="w"> </span>turtlesim/srv/Spawn<span class="w"> </span><span class="s2">&quot;{x: 2, y: 2, theta: 0.2, name: &#39;&#39;}&quot;</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="c1"># nameが空欄の場合はturtle2が割り当てられる</span>
+</code></pre></div></p>
+<p><img alt="画像23.png" src="../img/2/image8.png" /></p>
+<hr />
+<h2 id="6-ros2">6. ROS2コマンドでアクション通信を調べる</h2>
+<p><code>turtlesim_node</code>には指定の角度になるように回転するアクション通信<code>/[名前空間]/rotate_absolute</code>がある。これを使いアクション通信の使い方を学ぼう。<br />
+以下のROS2コマンドを用いてノードのサービス情報を調べ、アクション名とアクション型を調べます  </p>
+<p>①②は2-4と同様のため省略<br />
+③アクションのリストを表示する
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>ros2<span class="w"> </span>action<span class="w"> </span>list
+</code></pre></div>
+④アクションのアクション型名を表示する
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>ros2<span class="w"> </span>action<span class="w"> </span>list<span class="w"> </span>-t
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="c1"># ros2 action info [アクション名] -t</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>ros2<span class="w"> </span>action<span class="w"> </span>info<span class="w"> </span>/turtle1/rotate_absolute<span class="w"> </span>-t
+</code></pre></div>
+⑤アクション型のデータ構造を表示する
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1"># ros2 interface show [アクション型名]</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span>turtlesim/action/RotateAbsolute
+</code></pre></div>
+⑥アクション要請を行ってみる
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1"># ros2 action send_goal [アクション名] [アクション型名] [リクエスト値]</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="c1"># フィードバックを表示する</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="c1"># ros2 action send_goal [アクション名] [アクション型名] [リクエスト値] --feedback</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>ros2<span class="w"> </span>action<span class="w"> </span>send_goal<span class="w"> </span>/turtle1/rotate_absolute<span class="w"> </span>turtlesim/action/RotateAbsolute<span class="w"> </span><span class="s2">&quot;{theta: 1.57}&quot;</span>
+</code></pre></div></p>
+<hr />
+<h2 id="7-ros2">7. ROS2コマンドでパラメータを調べる</h2>
+<p><code>turtlesim_node</code>には背景色のパラメータ<code>/background_*</code>がある。これを使いパラメータの使い方を学ぼう。<br />
+以下のROS2コマンドを用いてノードを調べ、パラメータ名と設定値を調べます  </p>
+<p>①は2-4と同様のため省略
+②パラメータのリストを表示する(--param-typeでデータ型追加表示)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>ros2<span class="w"> </span>param<span class="w"> </span>list<span class="w"> </span>--param-type
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="c1"># 特定のノードのパラメータ名を表示する</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="c1"># ros2 param list [ノード名]</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>ros2<span class="w"> </span>param<span class="w"> </span>list<span class="w"> </span>/turtlesim
+</code></pre></div>
+③パラメータの値を取得
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1"># ros2 param get [ノード名] [パラメータ名]</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>ros2<span class="w"> </span>param<span class="w"> </span>get<span class="w"> </span>/turtlesim<span class="w"> </span>background_b
+</code></pre></div>
+④パラメータの定義を取得(値域や説明)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="c1"># ros2 param describe [ノード名] [パラメータ名]</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>ros2<span class="w"> </span>param<span class="w"> </span>describe<span class="w"> </span>/turtlesim<span class="w"> </span>background_b
+</code></pre></div>
+⑤パラメータに値をセット
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="c1"># ros2 param set [ノード名] [パラメータ名] [設定値]</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>ros2<span class="w"> </span>param<span class="w"> </span><span class="nb">set</span><span class="w"> </span>/turtlesim<span class="w"> </span>background_b<span class="w"> </span><span class="m">128</span>
+</code></pre></div>
+⑥特定のノードのパラメータを一括でyamlに書き出す(ノード名.yamlになる)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="c1"># ros2 param dump [ノード名] </span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="c1"># ファイルに書き出さずに端末に表示するだけ</span>
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="c1"># ros2 param dump [ノード名] --print</span>
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>ros2<span class="w"> </span>param<span class="w"> </span>dump<span class="w"> </span>/turtlesim
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="c1"># 実行した端末の場所にturtlesim.yamlが生成される</span>
+</code></pre></div>
+⑦パラメータをyamlで一括変更
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="c1"># turtlesim.yamlの値を編集し、パラメータを一括変更</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="c1"># ros2 param load [ノード名] [yamlファイル]</span>
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>ros2<span class="w"> </span>param<span class="w"> </span>load<span class="w"> </span>/turtlesim<span class="w"> </span>turtlesim.yaml
+</code></pre></div></p>
+<hr />
+<h2 id="8">8. 自分でノード間通信(メッセージ通信)を繋げてみる</h2>
+<p><code>/spawnサービス</code>で2匹目のカメを呼び出しましたが、まだ動かせていません。速度指令を送信して動かしてみましょう  </p>
+<ul>
+<li>2匹目のカメを動かすための速度指令は下記のようになっています。([name]は/spawnで指定したカメの名前)  <ul>
+<li>トピック名：/[name]/cmd_vel</li>
+<li>メッセージ型：geometry_msgs/msg/Twist</li>
+</ul>
+</li>
+<li>1匹目のカメを動かしていた<code>turtle_teleop_keyノード</code>のデフォルトトピック名は、<code>/turtle1/cmd_vel</code>でした。</li>
+<li>トピック通信は、トピック名とメッセージ型が一致していないと通信されないので、トピック名の変更が必要です。</li>
+<li><code>ros2 runコマンド</code>のオプションを用いることで、起動時にトピック名やパラメータ値などを変更して起動することができます。</li>
+<li>この名前変更は<mark>remap</mark>と呼ばれ、プログラムを変更せずに実現ができます。</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="c1"># ノード名を変更して起動する</span>
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>ros2<span class="w"> </span>run<span class="w"> </span><span class="o">[</span>パッケージ名<span class="o">]</span><span class="w"> </span><span class="o">[</span>ノード名<span class="o">]</span><span class="w"> </span>--ros-args<span class="w"> </span>-r<span class="w"> </span>__node:<span class="o">=[</span>ノード名<span class="o">]</span>
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="c1"># トピック名を変更して起動する</span>
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>ros2<span class="w"> </span>run<span class="w"> </span><span class="o">[</span>パッケージ名<span class="o">]</span><span class="w"> </span><span class="o">[</span>ノード名<span class="o">]</span><span class="w"> </span>--ros-args<span class="w"> </span>-r<span class="w"> </span><span class="o">[</span>トピック名<span class="o">]</span>:<span class="o">=[</span>変更後のトピック名<span class="o">]</span>
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="c1"># サービス名を変更して起動する</span>
+<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>ros2<span class="w"> </span>run<span class="w"> </span><span class="o">[</span>パッケージ名<span class="o">]</span><span class="w"> </span><span class="o">[</span>ノード名<span class="o">]</span><span class="w"> </span>--ros-args<span class="w"> </span>-r<span class="w"> </span><span class="o">[</span>サービス名<span class="o">]</span>:<span class="o">=[</span>変更後のサービス名<span class="o">]</span>
+<a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a><span class="c1"># アクション名を変更して起動する</span>
+<a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a>ros2<span class="w"> </span>run<span class="w"> </span><span class="o">[</span>パッケージ名<span class="o">]</span><span class="w"> </span><span class="o">[</span>ノード名<span class="o">]</span><span class="w"> </span>--ros-args<span class="w"> </span>-r<span class="w"> </span><span class="o">[</span>アクション名<span class="o">]</span>:<span class="o">=[</span>変更後のアクション名<span class="o">]</span>
+<a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a><span class="c1"># パラメータ値を変更して起動する</span>
+<a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a>ros2<span class="w"> </span>run<span class="w"> </span><span class="o">[</span>パッケージ名<span class="o">]</span><span class="w"> </span><span class="o">[</span>ノード名<span class="o">]</span><span class="w"> </span>--ros-args<span class="w"> </span>-p<span class="w"> </span><span class="o">[</span>パラメータ名<span class="o">]</span>:<span class="o">=[</span>パラメータ値<span class="o">]</span>
+<a id="__codelineno-34-11" name="__codelineno-34-11" href="#__codelineno-34-11"></a><span class="c1"># yamlでパラメータを一括変更して起動する</span>
+<a id="__codelineno-34-12" name="__codelineno-34-12" href="#__codelineno-34-12"></a>ros2<span class="w"> </span>run<span class="w"> </span><span class="o">[</span>パッケージ名<span class="o">]</span><span class="w"> </span><span class="o">[</span>ノード名<span class="o">]</span><span class="w"> </span>--ros-args<span class="w"> </span>--params-file<span class="w"> </span><span class="o">[</span>yamlファイル名<span class="o">]</span>
+<a id="__codelineno-34-13" name="__codelineno-34-13" href="#__codelineno-34-13"></a><span class="c1"># 複数変更して起動する場合は、下記のようにする</span>
+<a id="__codelineno-34-14" name="__codelineno-34-14" href="#__codelineno-34-14"></a>ros2<span class="w"> </span>run<span class="w"> </span><span class="o">[</span>パッケージ名<span class="o">]</span><span class="w"> </span><span class="o">[</span>ノード名<span class="o">]</span><span class="w"> </span>--ros-args<span class="w"> </span>-p<span class="w"> </span><span class="o">[</span>パラメータ名<span class="o">]</span>:<span class="o">=[</span>パラメータ値<span class="o">]</span><span class="w"> </span>-p<span class="w"> </span><span class="o">[</span>パラメータ名<span class="o">]</span>:<span class="o">=[</span>パラメータ値<span class="o">]</span>
+</code></pre></div>
+<hr />
+<h3 id="_8">よく使われる速度指令の配信方法</h3>
+<p>速度指令値を簡単に配信したい場合、よく使われる方法として以下の3通りが挙げられる</p>
+<ol>
+<li>
+<p>ros2 topic pubコマンド　←最も簡便
+    <div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="c1"># ros2 topic pub [トピック名] [メッセージ型] [入力値]</span>
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="c1"># トピック名まで入力し、Tabキーで補間可能</span>
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/turtle1/cmd_vel<span class="w"> </span>geometry_msgs/msg/Twist<span class="w"> </span><span class="s2">&quot;{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}&quot;</span>
+</code></pre></div></p>
+<p>[入力値]はYaml形式で記述する必要があります。<br />
+<code>--once</code>オプションで1度だけ、<code>-r 1</code>オプションでは1Hzでpublishする。</p>
+</li>
+<li>
+<p>Joy+teleop_twist_joyパッケージ(ジョイスティック入力)
+    <div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="c1"># Joyパッケージとteleop_twist_joyパッケージのインストール</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-<span class="o">[</span>rosバージョン<span class="o">]</span>-joy<span class="w"> </span>ros-<span class="o">[</span>rosバージョン<span class="o">]</span>-teleop-twist-joy
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="c1"># joyノードの起動(ジョイスティックからの入力を受け取り/joy[sensor_msgs/msg/Joy]トピックを配信する)</span>
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>ros2<span class="w"> </span>run<span class="w"> </span>joy<span class="w"> </span>joy_node
+<a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a><span class="c1"># teleop_nodeの起動(/joy[sensor_msgs/msg/Joy]トピックを受け取り、速度指令に変換して/cmd_vel[geometory_msgs/msg/Twist]トピックを出力する)</span>
+<a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_joy<span class="w"> </span>teleop_node
+</code></pre></div></p>
+</li>
+<li>teleop_twist_keybordパッケージ(キーボード入力)
+    <div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="c1"># teleop_twist_keybordパッケージのインストール</span>
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-<span class="o">[</span>rosバージョン<span class="o">]</span>-teleop-twist-keybord
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="c1"># teleop_twist_keybordノードの起動(キーボード入力から速度指令値/cmd_vel[geometory_msgs/msg/Twist]トピックを配信する)</span>
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>teleop_twist_keyboard
+</code></pre></div>
+それでは、2匹目のカメを動かしてみましょう。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="c1"># ros2 topic pubコマンドの場合</span>
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/turtle2/cmd_vel<span class="w"> </span>geometry_msgs/msg/Twist<span class="w"> </span><span class="s2">&quot;{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}&quot;</span>
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="c1"># turtle_teleop_keyの2個目を起動する場合</span>
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlesim<span class="w"> </span>turtle_teleop_key<span class="w"> </span>--ros-args<span class="w"> </span>-r<span class="w"> </span>__node:<span class="o">=</span>teleop_turtle2<span class="w"> </span>-r<span class="w"> </span>/turtle1/cmd_vel:<span class="o">=</span>/turtle2/cmd_vel
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a><span class="c1"># teleop_twist_keyboardの場合</span>
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>--ros-args<span class="w"> </span>-r<span class="w"> </span>/cmd_vel:<span class="o">=</span>/turtle2/cmd_vel
+<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>
+<a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a><span class="c1"># joy + teleop_twist_joyの場合</span>
+<a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a>ros2<span class="w"> </span>run<span class="w"> </span>joy<span class="w"> </span>joy_node
+<a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_joy<span class="w"> </span>teleop_node<span class="w"> </span>--ros-args<span class="w"> </span>-r<span class="w"> </span>cmd_vel:<span class="o">=</span>/turtle2/cmd_vel
+</code></pre></div></li>
+</ol>
+<hr />
+<h2 id="ros2ros2_1">ROS2の基礎とROS2コマンドのまとめ</h2>
+<ul>
+<li>ROS2の動作原理は複数ノードをメッセージ通信で接続する形式で動作し、ノードはパッケージ単位で管理される。</li>
+<li>ノードを起動するには、パッケージ名とノード名が必要。</li>
+<li>ROS2の通信にはトピック、サービス、アクション、パラメータの4種類があり、名前とデータ型が一致していると通信ができる。</li>
+<li>トピック通信は、パブリッシャからサブスクライバへの単方向非同期通信</li>
+<li>サービス通信は、クライアントからリクエストを送り、サーバがレスポンスを返す双方向同期通信(他のノードの関数を呼び出すイメージ)</li>
+<li>アクション通信は、クライアントからリクエストを送り、サーバが処理中の中間結果をフィードバックで返し、完了すると結果(リザルト)を返す双方向非同期通信(途中でキャンセル処理が可能)</li>
+<li>パラメータは、ノードが持つ構成値で、ソースコードを変更せずに起動時や実行時に変更ができる</li>
+<li>ROS2は基本的にSI単位系、右手座標系で定義されている。</li>
+<li>トピック名やサービス名はremapすることで、プログラムを再コンパイルせずに変更できる。</li>
+<li>ROS2コマンドでノードを調べることで、ノードの入出力とパラメータが把握できる(ブラックボックスでも扱える)</li>
+</ul>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy;2024 Tokyo Metropolitan University
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+    
+  </body>
+</html>
