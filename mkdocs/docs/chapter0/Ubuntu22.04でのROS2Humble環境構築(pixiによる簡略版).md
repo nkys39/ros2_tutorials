@@ -189,3 +189,18 @@ ROS2の開発では、ターミナルを大量に開きます。マウス操作�
 キーボードにWindowsキーがある場合、矢印キー(左右)と組み合わせることで、画面配置を変更することができます。
 
 ![gazebo_rviz.png](img/gazebo_rviz.png)
+
+### visual studio codeのインストール
+便利なコードエディタの紹介です。  
+下記ページ(ブラウザで「vscode」と検索でもよい)から`.debファイル`をダウンロードし保存する。その後ソフトウェアのインストールから実行しインストールする  
+[visual studio codeのインストール](https://code.visualstudio.com/download)
+
+```sh
+sudo dpkg -i debファイル名
+```
+
+使い方は、ターミナルで開きたいフォルダまで`cd`コマンドで移動し、下記コマンドでフォルダごと開くことが可能です。
+
+```sh
+code .
+```
