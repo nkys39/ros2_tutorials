@@ -32,7 +32,7 @@ cd pixi_ros2 && cat pixi.toml
 channels = ["robostack-staging", "conda-forge"]
 description = "Add a short description here"
 name = "pixi_ros2"
-platforms = ["linux-64"]
+platforms = ["osx-arm64"]
 version = "0.1.0"
 
 [tasks]
@@ -47,7 +47,7 @@ ROS2環境用に`pixi.toml`ファイルを編集し、以下のようにする�
 channels = ["robostack-staging", "conda-forge"]
 description = "Add a short description here"
 name = "pixi_ros2"
-platforms = ["linux-64"]
+platforms = ["osx-arm64"]
 version = "0.1.0"
 
 [tasks]
