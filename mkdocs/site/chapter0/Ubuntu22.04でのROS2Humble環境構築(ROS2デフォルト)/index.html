@@ -464,6 +464,48 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      開発を便利にする機能やショートカットキー
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="開発を便利にする機能やショートカットキー">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      標準ターミナル操作関連ショートカットキー
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      ウインドウ画面配置の操作
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visual-studio-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      visual studio codeのインストール
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1286,6 +1328,48 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      開発を便利にする機能やショートカットキー
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="開発を便利にする機能やショートカットキー">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      標準ターミナル操作関連ショートカットキー
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      ウインドウ画面配置の操作
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visual-studio-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      visual studio codeのインストール
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1470,6 +1554,33 @@ DDSでは、さまざまな論理ネットワークで物理ネットワーク�
 <a id="__codelineno-27-32" name="__codelineno-27-32" href="#__codelineno-27-32"></a><span class="c1"># Turtlebot3シミュレーション用の設定(説明後述)</span>
 <a id="__codelineno-27-33" name="__codelineno-27-33" href="#__codelineno-27-33"></a><span class="nb">export</span><span class="w"> </span><span class="nv">TURTLEBOT3_MODEL</span><span class="o">=</span>waffle
 <a id="__codelineno-27-34" name="__codelineno-27-34" href="#__codelineno-27-34"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GAZEBO_MODEL_PATH</span><span class="o">=</span>:/opt/ros/humble/share/turtlebot3_gazebo/models
+</code></pre></div>
+<h2 id="_1">開発を便利にする機能やショートカットキー</h2>
+<p>開発を便利にする機能やショートカットキーついて紹介します。 </p>
+<h3 id="_2">標準ターミナル操作関連ショートカットキー</h3>
+<p>ROS2の開発では、ターミナルを大量に開きます。マウス操作は非常に時間がかかるため、キーボードショートカットを覚えましょう。</p>
+<ul>
+<li>controlキー(CTRL)+Altキー+<code>t</code>: 新しいウインドウでターミナルを開きます</li>
+<li>controlキー(CTRL)+Shift+<code>t</code>: 新しいタブでターミナルを開きます(画面上のスペースを取らないので便利です)</li>
+<li>controlキー(CTRL)+<code>d</code> : ターミナルウインドウを閉じたり、仮想環境ターミナルを抜けることが可能です。終了コマンドである<code>exit</code>と同様の機能があります。</li>
+<li>controlキー(CTRL)+<code>c</code> : コピー＆ペーストのコピーのショートカットキーとして有名ですが、ターミナル上で実行することでプログラムを停止できます。</li>
+<li>矢印キー(上下): 前回入力したコマンドを再入力してくれます。</li>
+<li>controlキー(CTRL)+Shift+<code>c</code>: ターミナル上でのコピーキーです。</li>
+<li>controlキー(CTRL)+Shift+<code>v</code>: ターミナル上でのペーストキーです。</li>
+</ul>
+<p>標準ターミナルよりも便利なターミナルアプリはたくさんあります。ネット上に色々紹介されているので自分に合ったものを探してみてください。</p>
+<h3 id="_3">ウインドウ画面配置の操作</h3>
+<p>キーボードにWindowsキーがある場合、矢印キー(左右)と組み合わせることで、画面配置を変更することができます。<br />
+下記のようにGazeboとRvizを同時に見たい場合などは非常に便利です。</p>
+<p><img alt="gazebo_rviz.png" src="../img/gazebo_rviz.png" /></p>
+<h3 id="visual-studio-code">visual studio codeのインストール</h3>
+<p>便利なコードエディタの紹介です。<br />
+下記ページ(ブラウザで「vscode」と検索でもよい)から<code>.debファイル</code>をダウンロードし保存する。その後ソフトウェアのインストールから実行しインストールする<br />
+<a href="https://code.visualstudio.com/download">visual studio codeのインストール</a></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>debファイル名
+</code></pre></div>
+<p>使い方は、ターミナルで開きたいフォルダまで<code>cd</code>コマンドで移動し、下記コマンドでフォルダごと開くことが可能です。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>code<span class="w"> </span>.
 </code></pre></div>
 
 

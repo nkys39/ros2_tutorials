@@ -404,6 +404,66 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      動作確認
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pixiros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      pixi環境でのROS2動作確認
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      開発を便利にする機能やショートカットキー
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="開発を便利にする機能やショートカットキー">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      標準ターミナル操作関連ショートカットキー
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      ウインドウ画面配置の操作
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visual-studio-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      visual studio codeのインストール
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1040,6 +1100,66 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      動作確認
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pixiros2" class="md-nav__link">
+    <span class="md-ellipsis">
+      pixi環境でのROS2動作確認
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      開発を便利にする機能やショートカットキー
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="開発を便利にする機能やショートカットキー">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      標準ターミナル操作関連ショートカットキー
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      ウインドウ画面配置の操作
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visual-studio-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      visual studio codeのインストール
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1086,42 +1206,129 @@
 <a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="o">[</span>dependencies<span class="o">]</span>
 </code></pre></div></p>
-<p>ROS2環境用に<code>pixi.toml</code>ファイルを編集し、以下のようにする。</p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="o">[</span>project<span class="o">]</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nv">channels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s2">&quot;robostack-staging&quot;</span>,<span class="w"> </span><span class="s2">&quot;conda-forge&quot;</span><span class="o">]</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nv">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Add a short description here&quot;</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;pixi_ros2&quot;</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nv">platforms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s2">&quot;osx-arm64&quot;</span><span class="o">]</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nv">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="o">[</span>tasks<span class="o">]</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="o">[</span>dependencies<span class="o">]</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>ros-humble-desktop<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=0.10.0,&lt;0.11&quot;</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>ros-humble-turtlesim<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=1.4.2,&lt;2&quot;</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>colcon-common-extensions<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=0.3.0,&lt;0.4&quot;</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="nv">setuptools</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=75.6.0,&lt;76&quot;</span>
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>ros-humble-ament-cmake-auto<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=1.3.7,&lt;2&quot;</span>
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="nv">compilers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=1.8.0,&lt;2&quot;</span>
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>pkg-config<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=0.29.2,&lt;0.30&quot;</span>
-<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="nv">cmake</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=3.28.3,&lt;4&quot;</span>
-<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="nv">ninja</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=1.12.1,&lt;2&quot;</span>
-<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>ros-humble-turtlebot3-gazebo<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=2.2.5,&lt;3&quot;</span>
-<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>ros-humble-nav2-bringup<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=1.1.13,&lt;2&quot;</span>
-<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="nv">protobuf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;4.25.1.*&quot;</span>
-<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="nv">glog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;==0.6.0&quot;</span>
-<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="nv">graphviz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=9.0.0,&lt;10&quot;</span>
-<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>
-<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="o">[</span>activation.env<span class="o">]</span>
-<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="nv">ROS_DOMAIN_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2&quot;</span>
-<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="nv">TURTLEBOT3_MODEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;waffle&quot;</span>
-<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="nv">GAZEBO_MODEL_PATH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GAZEBO_MODEL_PATH</span><span class="s2">:</span><span class="nv">$PIXI_PROJECT_ROOT</span><span class="s2">/.pixi/envs/default/share/turtlebot3_gazebo/models&quot;</span>
+<p>ROS2環境用に<code>pixi.toml</code>ファイルを編集します。<code>[dependencies]</code>以下を下記のように変更します。<code>[activation.env]</code>も忘れずに追加してください。<code>[project]</code>と<code>[tasks]</code>は変更する必要はありません。<br />
+テキストエディタは何を用いても良いですが、ここでは最初から入っている<code>nano</code>を用いる方法を記載します。<br />
+ターミナルを開き、下記コマンドを入力し、<code>pixi.toml</code>を編集します。<br />
+編集後、controlキー(CTRL)+<code>o</code>を押し、Enterキーで保存ができます。<code>nano</code>を閉じるにはcontrolキー(CTRL)+<code>x</code>を入力します。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>~/pixi_ros2
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>nano<span class="w"> </span>pixi.toml
 </code></pre></div>
-上記の<code>[dependencies]</code>は以下のコマンドと同義でも追加できる。
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>~/pixi_ros2
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>pixi<span class="w"> </span>add<span class="w"> </span>ros-humble-desktop<span class="w"> </span>ros-humble-turtlesim<span class="w"> </span>colcon-common-extensions<span class="w"> </span>setuptools<span class="w"> </span>ros-humble-ament-cmake-auto<span class="w"> </span>compilers<span class="w"> </span>pkg-config<span class="w"> </span>cmake<span class="w"> </span>ninja<span class="w"> </span>ros-humble-turtlebot3-gazebo<span class="w"> </span>ros-humble-nav2-bringup<span class="w"> </span><span class="s2">&quot;protobuf=4.25.1&quot;</span><span class="w"> </span><span class="nv">glog</span><span class="o">==</span><span class="m">0</span>.6.0<span class="w"> </span>graphviz
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="o">[</span>project<span class="o">]</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">channels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s2">&quot;robostack-staging&quot;</span>,<span class="w"> </span><span class="s2">&quot;conda-forge&quot;</span><span class="o">]</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nv">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Add a short description here&quot;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;pixi_ros2&quot;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nv">platforms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s2">&quot;osx-arm64&quot;</span><span class="o">]</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nv">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="o">[</span>tasks<span class="o">]</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="o">[</span>dependencies<span class="o">]</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>ros-humble-desktop<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=0.10.0,&lt;0.11&quot;</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>ros-humble-turtlesim<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=1.4.2,&lt;2&quot;</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>colcon-common-extensions<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=0.3.0,&lt;0.4&quot;</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="nv">setuptools</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=75.6.0,&lt;76&quot;</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>ros-humble-ament-cmake-auto<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=1.3.7,&lt;2&quot;</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="nv">compilers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=1.8.0,&lt;2&quot;</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>pkg-config<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=0.29.2,&lt;0.30&quot;</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="nv">cmake</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=3.28.3,&lt;4&quot;</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="nv">ninja</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=1.12.1,&lt;2&quot;</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>ros-humble-turtlebot3-gazebo<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=2.2.5,&lt;3&quot;</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>ros-humble-nav2-bringup<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=1.1.13,&lt;2&quot;</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="nv">protobuf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;4.25.1.*&quot;</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="nv">glog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;==0.6.0&quot;</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="nv">graphviz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=9.0.0,&lt;10&quot;</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="o">[</span>activation.env<span class="o">]</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="nv">ROS_DOMAIN_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2&quot;</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="nv">TURTLEBOT3_MODEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;waffle&quot;</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="nv">GAZEBO_MODEL_PATH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GAZEBO_MODEL_PATH</span><span class="s2">:</span><span class="nv">$PIXI_PROJECT_ROOT</span><span class="s2">/.pixi/envs/default/share/turtlebot3_gazebo/models&quot;</span>
 </code></pre></div>
-<code>[activation.env]</code>は手動で追加しておく</p>
+上記の<code>[dependencies]</code>は以下のインストールコマンドでも追加できますが、<code>[activation.env]</code>はエディタで追加する必要があります。
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span>~/pixi_ros2
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>pixi<span class="w"> </span>add<span class="w"> </span>ros-humble-desktop<span class="w"> </span>ros-humble-turtlesim<span class="w"> </span>colcon-common-extensions<span class="w"> </span>setuptools<span class="w"> </span>ros-humble-ament-cmake-auto<span class="w"> </span>compilers<span class="w"> </span>pkg-config<span class="w"> </span>cmake<span class="w"> </span>ninja<span class="w"> </span>ros-humble-turtlebot3-gazebo<span class="w"> </span>ros-humble-nav2-bringup<span class="w"> </span><span class="s2">&quot;protobuf=4.25.1&quot;</span><span class="w"> </span><span class="nv">glog</span><span class="o">==</span><span class="m">0</span>.6.0<span class="w"> </span>graphviz
+</code></pre></div></p>
+<h2 id="_2">動作確認</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span>~/pixi_ros2
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>pixi<span class="w"> </span>shell
+</code></pre></div>
+初回起動時(それ以降は<code>[dependencies]</code>に差分がある時)にインストールが開始されます。<br />
+経験上、複数の<code>[dependencies]</code>を一括インストールした場合、途中で失敗するケースがあります。<br />
+その際は、もう一度<code>pixi shell</code>コマンドを入力してください。失敗した途中の場所からインストールが再開されます。<br />
+インストールが完了すると、ターミナルの先頭に<code>(pixi_ros2)</code>が表示されます。<br />
+ターミナルの先頭に<code>(pixi_ros2)</code>が表示されている状態は、pixiの仮想環境に入っていることを表しています。<br />
+pixiで環境構築を行なった場合には、コマンド入力前にターミナルの先頭に<code>(pixi_ros2)</code>が表示されている状態か確認して、コマンドを実行してください。</p>
+<h2 id="pixiros2">pixi環境でのROS2動作確認</h2>
+<p>ROS2のチュートリアルでよく使われるturtlesimノードを起動して動作確認を行います。  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">cd</span><span class="w"> </span>~/pixi_ros2
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>pixi<span class="w"> </span>shell
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlesim<span class="w"> </span>turtlesim_node
+</code></pre></div>
+<p>上記コマンドを実行し下記のような青いウインドウが出てくれば成功です。ただし、初回起動時は、表示されるまで１分ほど時間がかかりますので、気長にお待ちください。  </p>
+<p><img alt="turtlesim_node.png" src="../img/turtlesim_node.png" /></p>
+<p>表示されたら、上記のターミナルは残したまま、新しいターミナルを開き下記コマンドを実行します。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span>~/pixi_ros2
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>pixi<span class="w"> </span>shell
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>ros2<span class="w"> </span>run<span class="w"> </span>turtlesim<span class="w"> </span>turtlesim_node
+</code></pre></div>
+<p>コマンドを入力し以下のように出れば成功です。  </p>
+<p><img alt="cmd_turtle_teleop_key2.png" src="../img/cmd_turtle_teleop_key2.png" /></p>
+<p>キーボード入力は、実行中のターミナルが選択されている状態で、<br />
+矢印キー(↑↓→←)で入力し、↑↓キーで前後に進み、→←でその場で回転します。<br />
+Qキーを押すことでノードが終了します。<br />
+また、起動後ターミナル上に記載されている通り、G|B|V|C|D|E|R|Tキーを押すことで、Fキーを中心とした角度方向に亀が回転します。<br />
+回転中にFキーを押すことで途中でキャンセルができます。</p>
+<p>キーボード入力を行うと以下のように亀が動き、軌跡が描画されます。</p>
+<p><img alt="turtlesim_node2.png" src="../img/turtlesim_node2.png" /></p>
+<p>プログラムを終了する場合には、controlキー(CTRL)+<code>c</code>を押すと停止します。<br />
+pixi環境から抜けるには、controlキー(CTRL)+<code>d</code>を用います。</p>
+<p>本資料では、その他のGUIとして<code>rviz2</code>と<code>gazebo</code>を用います。こちらも初回起動に時間がかかるため、動作確認として表示してみましょう。<br />
+下記の画像のようなウインドウが開かない場合には、controlキー(CTRL)+<code>c</code>を押してプログラムを停止し、再度コマンドを実行してください。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">cd</span><span class="w"> </span>~/pixi_ros2
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>pixi<span class="w"> </span>shell
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>rviz2
+</code></pre></div>
+<p><img alt="rviz.png" src="../img/rviz.png" /></p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">cd</span><span class="w"> </span>~/pixi_ros2
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>pixi<span class="w"> </span>shell
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>gazebo
+</code></pre></div>
+<img alt="gazebo.png" src="../img/gazebo.png" /></p>
+<p>以上のように表示できれば環境構築完了です。<br />
+動作確認したコマンドやプログラム、ツールの詳細なチュートリアルは、補足資料にまとめています。<br />
+講習では時間の都合上全てを説明できないため、SLAMに関連する項目のみ取り扱いますのでご了承ください。</p>
+<h2 id="_3">開発を便利にする機能やショートカットキー</h2>
+<p>開発を便利にする機能やショートカットキーついて紹介します。 </p>
+<h3 id="_4">標準ターミナル操作関連ショートカットキー</h3>
+<p>ROS2の開発では、ターミナルを大量に開きます。マウス操作は非常に時間がかかるため、キーボードショートカットを覚えましょう。<br />
+macOSでは、ターミナルアプリの起動はLaunchpad内のその他からターミナルを手動で起動する必要があります。</p>
+<ul>
+<li>commandキー+<code>n</code>: 新しいウインドウでターミナルを開きます</li>
+<li>commandキー+<code>t</code>: 新しいタブでターミナルを開きます(画面上のスペースを取らないので便利です)</li>
+<li>commandキー+<code>w</code>: ターミナルを閉じることができます。</li>
+<li>controlキー(CTRL)+<code>d</code> : 仮想環境ターミナルを抜けることが可能です。終了コマンドである<code>exit</code>と同様の機能があります。</li>
+<li>controlキー(CTRL)+<code>c</code> : コピー＆ペーストのコピーのショートカットキーとして有名ですが、ターミナル上で実行することでプログラムを停止できます。</li>
+<li>矢印キー(上下): 前回入力したコマンドを再入力してくれます。</li>
+<li>commandキー+<code>c</code>: ターミナル上でのコピーキーです。</li>
+<li>commandキー+<code>v</code>: ターミナル上でのペーストキーです。</li>
+<li>controlキー(CTRL)+Tabキー:右のタブに移動する </li>
+<li>controlキー(CTRL)+Shiftキー+Tabキー:左のタブに移動する </li>
+</ul>
+<p>標準ターミナルよりも便利なターミナルアプリはたくさんあります。ネット上に色々紹介されているので自分に合ったものを探してみてください。</p>
+<h3 id="_5">ウインドウ画面配置の操作</h3>
+<p>macOSでは標準でウインドウ画面配置を右寄せや左寄せに変更する機能が標準にありません。<br />
+Rectangleというアプリをインストールすることで、controlキー(CTRL)+optionキー+矢印キー(左右)を組み合わせることで、画面配置を変更することができます。<br />
+<a href="https://rectangleapp.com/">Rectangleのインストール</a><br />
+ダウンロード後に起動し、ウインドウのドラッグ&amp;ドロップでインストールできます。<br />
+ショートカットキーの確認や変更は、LaunchpadにRectangleが追加されているので、起動すると確認や編集が行えます。<br />
+下記のようにGazeboとRvizを同時に見たい場合などは非常に便利です。</p>
+<p><img alt="gazebo_rviz.png" src="../img/gazebo_rviz.png" /></p>
+<h3 id="visual-studio-code">visual studio codeのインストール</h3>
+<p>便利なコードエディタの紹介です。<br />
+下記ページ(ブラウザで「vscode」と検索でもよい)からmacOS用をダウンロードし保存する。その後ソフトウェアのインストールから実行しインストールする<br />
+<a href="https://code.visualstudio.com/download">visual studio codeのインストール</a></p>
+<p>使い方は、ターミナルで開きたいフォルダまで<code>cd</code>コマンドで移動し、下記コマンドでフォルダごと開くことが可能です。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>code<span class="w"> </span>.
+</code></pre></div>
 
 
 

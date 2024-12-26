@@ -244,3 +244,40 @@ export CYCLONEDDS_URI=~/cyclonedds_config/cyclonedds_config.xml
 export TURTLEBOT3_MODEL=waffle
 export GAZEBO_MODEL_PATH=:/opt/ros/humble/share/turtlebot3_gazebo/models
 ```
+
+## 開発を便利にする機能やショートカットキー
+開発を便利にする機能やショートカットキーついて紹介します。 
+
+### 標準ターミナル操作関連ショートカットキー
+ROS2の開発では、ターミナルを大量に開きます。マウス操作は非常に時間がかかるため、キーボードショートカットを覚えましょう。
+
+- controlキー(CTRL)+Altキー+`t`: 新しいウインドウでターミナルを開きます
+- controlキー(CTRL)+Shift+`t`: 新しいタブでターミナルを開きます(画面上のスペースを取らないので便利です)
+- controlキー(CTRL)+`d` : ターミナルウインドウを閉じたり、仮想環境ターミナルを抜けることが可能です。終了コマンドである`exit`と同様の機能があります。
+- controlキー(CTRL)+`c` : コピー＆ペーストのコピーのショートカットキーとして有名ですが、ターミナル上で実行することでプログラムを停止できます。
+- 矢印キー(上下): 前回入力したコマンドを再入力してくれます。
+- controlキー(CTRL)+Shift+`c`: ターミナル上でのコピーキーです。
+- controlキー(CTRL)+Shift+`v`: ターミナル上でのペーストキーです。
+
+標準ターミナルよりも便利なターミナルアプリはたくさんあります。ネット上に色々紹介されているので自分に合ったものを探してみてください。
+
+### ウインドウ画面配置の操作
+キーボードにWindowsキーがある場合、矢印キー(左右)と組み合わせることで、画面配置を変更することができます。  
+下記のようにGazeboとRvizを同時に見たい場合などは非常に便利です。
+
+![gazebo_rviz.png](img/gazebo_rviz.png)
+
+### visual studio codeのインストール
+便利なコードエディタの紹介です。  
+下記ページ(ブラウザで「vscode」と検索でもよい)から`.debファイル`をダウンロードし保存する。その後ソフトウェアのインストールから実行しインストールする  
+[visual studio codeのインストール](https://code.visualstudio.com/download)
+
+```sh
+sudo dpkg -i debファイル名
+```
+
+使い方は、ターミナルで開きたいフォルダまで`cd`コマンドで移動し、下記コマンドでフォルダごと開くことが可能です。
+
+```sh
+code .
+```

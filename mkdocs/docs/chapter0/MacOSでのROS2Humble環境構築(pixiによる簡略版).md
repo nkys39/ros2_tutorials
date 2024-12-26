@@ -40,7 +40,15 @@ version = "0.1.0"
 [dependencies]
 ```
 
-ROS2環境用に`pixi.toml`ファイルを編集し、以下のようにする。
+ROS2環境用に`pixi.toml`ファイルを編集します。`[dependencies]`以下を下記のように変更します。`[activation.env]`も忘れずに追加してください。`[project]`と`[tasks]`は変更する必要はありません。  
+テキストエディタは何を用いても良いですが、ここでは最初から入っている`nano`を用いる方法を記載します。  
+ターミナルを開き、下記コマンドを入力し、`pixi.toml`を編集します。  
+編集後、controlキー(CTRL)+`o`を押し、Enterキーで保存ができます。`nano`を閉じるにはcontrolキー(CTRL)+`x`を入力します。
+
+```sh
+cd ~/pixi_ros2
+nano pixi.toml
+```
 
 ```sh
 [project]
@@ -74,11 +82,125 @@ TURTLEBOT3_MODEL = "waffle"
 GAZEBO_MODEL_PATH = "$GAZEBO_MODEL_PATH:$PIXI_PROJECT_ROOT/.pixi/envs/default/share/turtlebot3_gazebo/models"
 
 ```
-上記の`[dependencies]`は以下のコマンドと同義でも追加できる。
+上記の`[dependencies]`は以下のインストールコマンドでも追加できますが、`[activation.env]`はエディタで追加する必要があります。
 ```sh
 cd ~/pixi_ros2
 pixi add ros-humble-desktop ros-humble-turtlesim colcon-common-extensions setuptools ros-humble-ament-cmake-auto compilers pkg-config cmake ninja ros-humble-turtlebot3-gazebo ros-humble-nav2-bringup "protobuf=4.25.1" glog==0.6.0 graphviz
 ```
-`[activation.env]`は手動で追加しておく
+
+## 動作確認
+```sh
+cd ~/pixi_ros2
+pixi shell
+```
+初回起動時(それ以降は`[dependencies]`に差分がある時)にインストールが開始されます。  
+経験上、複数の`[dependencies]`を一括インストールした場合、途中で失敗するケースがあります。  
+その際は、もう一度`pixi shell`コマンドを入力してください。失敗した途中の場所からインストールが再開されます。  
+インストールが完了すると、ターミナルの先頭に`(pixi_ros2)`が表示されます。  
+ターミナルの先頭に`(pixi_ros2)`が表示されている状態は、pixiの仮想環境に入っていることを表しています。  
+pixiで環境構築を行なった場合には、コマンド入力前にターミナルの先頭に`(pixi_ros2)`が表示されている状態か確認して、コマンドを実行してください。
+
+## pixi環境でのROS2動作確認
+ROS2のチュートリアルでよく使われるturtlesimノードを起動して動作確認を行います。  
+
+```sh
+cd ~/pixi_ros2
+pixi shell
+ros2 run turtlesim turtlesim_node
+```
+
+上記コマンドを実行し下記のような青いウインドウが出てくれば成功です。ただし、初回起動時は、表示されるまで１分ほど時間がかかりますので、気長にお待ちください。  
+
+![turtlesim_node.png](img/turtlesim_node.png)
+
+表示されたら、上記のターミナルは残したまま、新しいターミナルを開き下記コマンドを実行します。
+
+```sh
+cd ~/pixi_ros2
+pixi shell
+ros2 run turtlesim turtlesim_node
+```
+
+コマンドを入力し以下のように出れば成功です。  
+
+![cmd_turtle_teleop_key2.png](img/cmd_turtle_teleop_key2.png)
+
+キーボード入力は、実行中のターミナルが選択されている状態で、  
+矢印キー(↑↓→←)で入力し、↑↓キーで前後に進み、→←でその場で回転します。  
+Qキーを押すことでノードが終了します。  
+また、起動後ターミナル上に記載されている通り、G|B|V|C|D|E|R|Tキーを押すことで、Fキーを中心とした角度方向に亀が回転します。  
+回転中にFキーを押すことで途中でキャンセルができます。
+
+キーボード入力を行うと以下のように亀が動き、軌跡が描画されます。
+
+![turtlesim_node2.png](img/turtlesim_node2.png)
+
+プログラムを終了する場合には、controlキー(CTRL)+`c`を押すと停止します。  
+pixi環境から抜けるには、controlキー(CTRL)+`d`を用います。
+
+本資料では、その他のGUIとして`rviz2`と`gazebo`を用います。こちらも初回起動に時間がかかるため、動作確認として表示してみましょう。  
+下記の画像のようなウインドウが開かない場合には、controlキー(CTRL)+`c`を押してプログラムを停止し、再度コマンドを実行してください。
+
+```sh
+cd ~/pixi_ros2
+pixi shell
+rviz2
+```
+
+![rviz.png](img/rviz.png)
+
+```sh
+cd ~/pixi_ros2
+pixi shell
+gazebo
+```
+![gazebo.png](img/gazebo.png)
+
+以上のように表示できれば環境構築完了です。  
+動作確認したコマンドやプログラム、ツールの詳細なチュートリアルは、補足資料にまとめています。  
+講習では時間の都合上全てを説明できないため、SLAMに関連する項目のみ取り扱いますのでご了承ください。
+
+## 開発を便利にする機能やショートカットキー
+開発を便利にする機能やショートカットキーついて紹介します。 
+
+### 標準ターミナル操作関連ショートカットキー
+ROS2の開発では、ターミナルを大量に開きます。マウス操作は非常に時間がかかるため、キーボードショートカットを覚えましょう。  
+macOSでは、ターミナルアプリの起動はLaunchpad内のその他からターミナルを手動で起動する必要があります。
+
+- commandキー+`n`: 新しいウインドウでターミナルを開きます
+- commandキー+`t`: 新しいタブでターミナルを開きます(画面上のスペースを取らないので便利です)
+- commandキー+`w`: ターミナルを閉じることができます。
+- controlキー(CTRL)+`d` : 仮想環境ターミナルを抜けることが可能です。終了コマンドである`exit`と同様の機能があります。
+- controlキー(CTRL)+`c` : コピー＆ペーストのコピーのショートカットキーとして有名ですが、ターミナル上で実行することでプログラムを停止できます。
+- 矢印キー(上下): 前回入力したコマンドを再入力してくれます。
+- commandキー+`c`: ターミナル上でのコピーキーです。
+- commandキー+`v`: ターミナル上でのペーストキーです。
+- controlキー(CTRL)+Tabキー:右のタブに移動する 
+- controlキー(CTRL)+Shiftキー+Tabキー:左のタブに移動する 
+
+
+標準ターミナルよりも便利なターミナルアプリはたくさんあります。ネット上に色々紹介されているので自分に合ったものを探してみてください。
+
+### ウインドウ画面配置の操作
+macOSでは標準でウインドウ画面配置を右寄せや左寄せに変更する機能が標準にありません。  
+Rectangleというアプリをインストールすることで、controlキー(CTRL)+optionキー+矢印キー(左右)を組み合わせることで、画面配置を変更することができます。  
+[Rectangleのインストール](https://rectangleapp.com/)  
+ダウンロード後に起動し、ウインドウのドラッグ&ドロップでインストールできます。  
+ショートカットキーの確認や変更は、LaunchpadにRectangleが追加されているので、起動すると確認や編集が行えます。  
+下記のようにGazeboとRvizを同時に見たい場合などは非常に便利です。
+
+![gazebo_rviz.png](img/gazebo_rviz.png)
+
+### visual studio codeのインストール
+便利なコードエディタの紹介です。  
+下記ページ(ブラウザで「vscode」と検索でもよい)からmacOS用をダウンロードし保存する。その後ソフトウェアのインストールから実行しインストールする  
+[visual studio codeのインストール](https://code.visualstudio.com/download)
+
+
+使い方は、ターミナルで開きたいフォルダまで`cd`コマンドで移動し、下記コマンドでフォルダごと開くことが可能です。
+
+```sh
+code .
+```
 
 
