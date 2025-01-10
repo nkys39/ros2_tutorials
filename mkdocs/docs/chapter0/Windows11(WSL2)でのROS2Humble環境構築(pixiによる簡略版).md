@@ -137,7 +137,7 @@ ros2 run turtlesim turtlesim_node
 ```sh
 cd ~/pixi_ros2
 pixi shell
-ros2 run turtlesim turtlesim_node
+ros2 run turtlesim turtle_teleop_key
 ```
 
 コマンドを入力し以下のように出れば成功です。  
