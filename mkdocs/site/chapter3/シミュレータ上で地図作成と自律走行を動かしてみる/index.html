@@ -1121,11 +1121,9 @@ launchファイルの引数に何が指定できるかは、<code>ros2 launch [�
 起動に成功するとrvizは下記のようになります。</p>
 <p><img alt="" src="../img/slam.png" /></p>
 <p>速度指令をパブリッシュして地図を作成しましょう。</p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># キーボードで操作</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># キーボードで操作</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ros2<span class="w"> </span>run<span class="w"> </span>teleop_twist_keyboard<span class="w"> </span>teleop_twist_keyboard
 </code></pre></div>
-ジョイスティックで操作の場合、1番ボタン(低速)または,2番ボタン(高速)を押しながら左スティックを倒した方向に移動します。  <br />
-キーコンフィグはteleop_twist_joyノードのパラメータで変更可能です</p>
 <p><img alt="" src="../img/slam.gif" /></p>
 <hr />
 <h2 id="slam_1">地図作成(SLAM)で作成した地図を保存する</h2>
